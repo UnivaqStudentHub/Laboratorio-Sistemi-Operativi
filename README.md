@@ -69,6 +69,9 @@ Esistono due tipologie di directory:
 
 Per cambiare la directory di lavoro si usa la funzione `chdir`, che sarebbe una system call
 
+# Filesystem block
+La grandezza dei blocchi rappresenta la quantità di dati che il filesystem usa per leggere e scrivere data
+
 # Comandi
 
 ***Per agevolare la scrittura dei comandi, il tasto Tab spesso può essere utilizzato per autocompletare il comando o il nome del file.***
@@ -170,4 +173,4 @@ I parametri qui sotto elencati sono quelli più utilizzati, per una lista comple
 
 * **Directory entry**: un file che contiene informazioni su un file o una directory, come ad esempio il nome del file, la data di creazione, la dimensione, ecc.
 
-* **Soft links**: 
+* **Soft links**: un soft link è un file che contiene il path del file originale, in pratica è un alias del file originale. Se si elimina il file originale, il soft link diventa un file rotto.
