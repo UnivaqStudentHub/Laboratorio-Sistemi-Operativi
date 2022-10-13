@@ -54,12 +54,10 @@ Per tornare alla directory precedente si utilizza il comando:
 ```bash
 cd ..
 ```
-
-per tornare alla directory principale si utilizza il comando:
+Per tornare alla directory principale si utilizza il comando:
 ```bash
 cd ~
 ```
-
 
 # Working directory
 
@@ -139,6 +137,24 @@ Una volta eseguito il comando da Terminale, verrà aperto l'editor di testo sul 
 
 Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL + X**, se sono state effettuate delle modifiche vi verrà chiesto se volete sovrascrivere il file. 
 
+## **id**
+Visualizza l'ID dell'utente corrente
+    
+```bash
+id [option]
+```
+
+Differenti opzioni:
+* **[login name or user ID]**: visualizza l'ID dell'utente e del gruppo dell'utente specificato
+* **-u**: visualizza l'ID dell'utente corrente
+* **-un**: visualizza il nome dell'utente corrente
+* **-g**: visualizza l'ID del gruppo corrente
+* **-gn**: visualizza il nome del gruppo corrente
+* **-G**: visualizza tutti gli ID dei gruppi a cui appartiene l'utente corrente
+* **-Gn**: visualizza tutti i nomi di tutti i gruppi
+
+>Esempio per la prima opzione: `id <user name>`
+![](img/idCommand.png)
 # Parametri
 
 I parametri qui sotto elencati sono quelli più utilizzati, per una lista completa si può consultare la documentazione con il comando [man](#man)
@@ -153,3 +169,5 @@ I parametri qui sotto elencati sono quelli più utilizzati, per una lista comple
 * **Path**: una stringa che identifica la posizione di una specifica directory o file.
 
 * **Directory entry**: un file che contiene informazioni su un file o una directory, come ad esempio il nome del file, la data di creazione, la dimensione, ecc.
+
+* **Soft links**: 
