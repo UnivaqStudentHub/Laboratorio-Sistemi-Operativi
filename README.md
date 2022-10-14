@@ -30,6 +30,8 @@ Per cambiare shell basta scrivere il nome della shell che si vuole utilizzare
 ```bash
 zsh
 ```
+# Da dove prende i comandi il terminale?
+Quando scriviamo un comando nel terminale "the system" cerca l'implementazione del comando all'interno di un set predefinito di *direcories*, che in questo casi si trova in **`$PATH`**.
 
 # UNIX file system
 
@@ -81,6 +83,10 @@ Quindi potrebbe succedere che un file, dalla dimenzione di 1 kb, su disco vada a
 
 * Un **larger block size** aiuta ad aumentar ele performance sul disco nelle operazioni I/O. Questo perchè il disco può leggere e scrivere dati per un più lungo periodo di tempo sullo stesso blocco, per poi passare alla ricerca del blocco successivo
 * Allo stesso tempo se abbiamo molti file piccoli, come succede in `/etc`, avremmo uno spreco di spazio essendo che in uno stesso blocco non possono esserci dati di più file
+
+# Caratteri speciali nei nomi dei file e directory
+//IN ARRIVO
+
 
 # Comandi
 
@@ -149,6 +155,27 @@ le file permissions sono rappresentate da 3 gruppi di 3 caratteri, che rappresen
 * `w` = scrivibile
 * `x` = eseguibile
 
+La terna è così formata:
+
+    owner | group | others |
+
+Per consultare il comando per modificare i permessi di un file, si può consultare il comando [chmod](#chmod)
+
+<br>
+
+ ### **`ls -a`**<br>
+Permette di ottenere l'elenco di tutti i file presenti all'interno della directory in cui viene eseguito, compresi quelli nascosti, normalmente non visibili. (presentano un **"."** prima del nome del file stesso) 
+
+Gli argomenti possono essere combinati per ottenere una visualizzazione completa:
+>Esempio:
+>```bash 
+>ls -la
+>```
+><br>
+![](img/ls-la.png)
+
+
+***Nota:*** scrivere `ls -la` o `ls -l -a` è equivalente.
 
 <br>
 
@@ -157,8 +184,13 @@ Rappresenta il numero di blocchi occupati dai file (*prima colonna*), che poi de
 
 **Vengono presi in considerezione solo i file, non le directory**
 >Esempio:
-![](img/ls-s.png)
+![][def]
 
+### **`ls -1`**
+Mostra i file presenti nella directory mettendoli in colonna.
+
+### **`ls -t`**
+Con l'argomento `-t` è possibile anche ordinarli in base all'ultima modifica effettuata.
 
 ## **du**
 Mostra la dimensione dei file e delle directory su **disco**
@@ -174,6 +206,9 @@ Per visualizzare la dimensione dei file e delle directory in un formato più leg
 >```bash
 >du DISCLAIMER\authors\and\publisher.txt
 >```
+
+Permette di ottenere il path specificato all'interno di un file che risente del soft-link
+
 >il comando restituisce un risultato del tipo:
 >```bash
 >4.0K	DISCLAIMER authors and publisher.txt
@@ -191,13 +226,34 @@ Una volta eseguito il comando da Terminale, verrà aperto l'editor di testo sul 
 
 Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL + X**, se sono state effettuate delle modifiche vi verrà chiesto se volete sovrascrivere il file. 
 
+## **touch**
+`touch` è un comando che permette di impostare la data e ora di ultima modifica e/o di ultimo accesso di uno o più file e directory. In generale, viene usato da molti per creare dei file vuoti rapidamente.
+>Esempio: 
+>```bash 
+>touch test.txt
+>```
+><br>
+
+<br>
+
+
+![](img/touch.png)
+
+## **readlink**
+`readlink` viene usato per leggere il path contenuto all'interno di un file che risente del soft-link.
+```bash
+readlink [options] [file]
+```
+
+
+![](img/readlink.png)
+
 ## **cat**
-Visualizza il contenuto di un file di testo senza la possibilità di modificare
+Visualizza il contenuto di un file di testo senza la possibilità di modificarlo
 
 ```bash
 cat [options] [file_name]
 ```
-
 ## **id**
 Visualizza l'ID dell'utente corrente
     
@@ -205,6 +261,7 @@ Visualizza l'ID dell'utente corrente
 id [option]
 ```
 
+Differenti opzioni:
 Differenti opzioni:
 * **[login name or user ID]**: visualizza l'ID dell'utente e del gruppo dell'utente specificato
 * **-u**: visualizza l'ID dell'utente corrente
@@ -226,9 +283,49 @@ Visualizza la dimensione del blocco del filesystem
 <br>
 
 ![](img/blockSize.png)
-
+C
 * **Device Block Size**: è il blocco vero e proprio usato dall'hardware hard drive controller e non può essere cambiato
 * **Allocation Block Size**: è usato dal filesystem e viene inizializzato quando la partizione del drive viene formattata
+
+## **mkdir**
+crea una directory
+
+```bash
+mkdir [options] [directory_name]
+```
+
+>Esempio:
+>```bash
+>mkdir ./test
+>```
+>crea una directory chiamata `test` all'interno della directory corrente
+><br>
+><br>
+
+### **`mkdir -p`**
+
+```bash
+mkdir -p [DirectoryPath]
+```
+
+Crea delle directory intermedie nel path
+
+
+
+## **rmdir**
+rimuove una directory se è vuota
+
+```bash
+rmdir [options] [directory_name]
+```
+
+
+## **chmod**
+Modifica i permessi di un file o di una directory
+
+```bash
+chmod [options] [permissions] [file_name]
+```
 
 # Parametri
 
@@ -239,10 +336,12 @@ I parametri qui sotto elencati sono quelli più utilizzati, per una lista comple
 
 # Vocabolario
 
-* **Hard Link**: 
+* **Hard Link**: IN ARRIVO
 
-* **Soft links**:
+* **Soft links**: IN ARRIVO
 
 * **Path**: una stringa che identifica la posizione di una specifica directory o file.
 
 * **Directory entry**: un file che contiene informazioni su un file o una directory, come ad esempio il nome del file, la data di creazione, la dimensione, ecc.
+
+[def]: img/ls-s.png
