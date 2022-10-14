@@ -167,11 +167,7 @@ Per consultare il comando per modificare i permessi di un file, si può consulta
 Permette di ottenere l'elenco di tutti i file presenti all'interno della directory in cui viene eseguito, compresi quelli nascosti, normalmente non visibili. (presentano un **"."** prima del nome del file stesso) 
 
 Gli argomenti possono essere combinati per ottenere una visualizzazione completa:
->Esempio:
->```bash 
->ls -la
->```
-><br>
+
 ![](img/ls-la.png)
 
 
@@ -218,9 +214,9 @@ Permette di ottenere il path specificato all'interno di un file che risente del 
 ## **nano**
 Editor di testo di UNIX, permette la modifica di file di testo da CLI
 
-```bash 
-nano [file_name]
-```
+>```bash 
+>nano [file_name]
+>```
 
 Una volta eseguito il comando da Terminale, verrà aperto l'editor di testo sul file che si vuole modificare.
 
@@ -241,9 +237,9 @@ Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL +
 
 ## **readlink**
 `readlink` viene usato per leggere il path contenuto all'interno di un file che risente del soft-link.
-```bash
-readlink [options] [file]
-```
+>```bash
+>readlink [options] [file]
+>```
 
 
 ![](img/readlink.png)
@@ -251,9 +247,9 @@ readlink [options] [file]
 ## **cat**
 Visualizza il contenuto di un file di testo senza la possibilità di modificarlo
 
-```bash
-cat [options] [file_name]
-```
+>```bash
+>cat [options] [file_name]
+>```
 ## **id**
 Visualizza l'ID dell'utente corrente
     
