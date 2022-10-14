@@ -115,13 +115,14 @@ In seguito vediamo la struttura di output del comando `ls -l`:
 
  col. 1     | col. 2    | col. 3   |col. 4   |col. 5 | col. 6 | col. 7 | col. 8 | col. 9
 :----------:|:---------:| :-------:|:-------:| -----:|-------:|-------:|-------:|--------:
-file premission       |    numero di hard links del file o il numero di directory entries contenute  | owner name       |  owner group       |  file size     |     Mese di modifica   |  giorno di modifica      |   anno/ora di modifica |     nome del file o directory o link 
+file premission       |    numero di hard links del file o il numero di directory entries contenute  | owner name       |  owner group       |  file size     |     Mese di modifica   |  giorno di modifica      |   anno/ora di modifica |     nome del file o directory o link  
 
 Prima della struttura a tabella è presente una riga che inizia con `total` che indica la dimensione totale dei file contenuti nella directory, visualizzata in numero di blocchi ( 512 bytes per blocco) o in bytes.
 
 All'interno della colonna 1, potrebbero esserci 2 attributi aggiuntivi:
-* **`+`**: 
-* **`@`**: 
+
+* **`+`**: ACl (Access Control List) abilitato
+* **`@`**: External Attribute
 
 
 **File permissions:**
