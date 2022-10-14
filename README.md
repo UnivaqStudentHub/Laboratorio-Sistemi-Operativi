@@ -120,8 +120,8 @@ file premission       |    numero di hard links del file o il numero di director
 Prima della struttura a tabella è presente una riga che inizia con `total` che indica la dimensione totale dei file contenuti nella directory, visualizzata in numero di blocchi ( 512 bytes per blocco) o in bytes.
 
 All'interno della colonna 1, potrebbero esserci 2 attributi aggiuntivi:
-* **`+`**: indica che il file è un file eseguibile
-* **`@`**: indica che il file è un link simbolico
+* **`+`**: 
+* **`@`**: 
 
 
 **File permissions:**
