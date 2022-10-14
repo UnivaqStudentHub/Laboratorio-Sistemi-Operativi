@@ -69,6 +69,9 @@ Esistono due tipologie di directory:
 
 Per cambiare la directory di lavoro si usa la funzione `chdir`, che sarebbe una system call
 
+Le ***directories*** sono dei file che contengono `directory entries`, la dimensione che viene visualizzata è quella usata per immagazzinare le *meta information* (direcory entries) per quella directory.<br>
+Per visualizzare la dimensione su **disco** usare il comando [`du`](#du)
+
 # Filesystem block
 La grandezza dei blocchi rappresenta la quantità di dati che il filesystem usa per leggere e scrivere data
 
@@ -76,7 +79,8 @@ Quindi potrebbe succedere che un file, dalla dimenzione di 1 kb, su disco vada a
 
 ![](img/block.png)
 
-**Larger block size** 
+* Un **larger block size** aiuta ad aumentar ele performance sul disco nelle operazioni I/O. Questo perchè il disco può leggere e scrivere dati per un più lungo periodo di tempo sullo stesso blocco, per poi passare alla ricerca del blocco successivo
+* Allo stesso tempo se abbiamo molti file piccoli, come succede in `/etc`, avremmo uno spreco di spazio essendo che in uno stesso blocco non possono esserci dati di più file
 
 # Comandi
 
@@ -110,8 +114,7 @@ Mostra il Path relativo alla directory in considerazione
 ls [options] [location]
 ```
 
->Esempio: `ls -l`
-
+ ### **`ls -l`**<br>
 Questo comando restituisce informazioni dettagliate sulle directory, tra cui data di creazione, l'utente che l'ha creata, se è eseguibile, scrivibile e leggibile.
 
 In seguito vediamo la struttura di output del comando `ls -l`:
@@ -123,21 +126,38 @@ In seguito vediamo la struttura di output del comando `ls -l`:
 :----------:|:---------:| :-------:|:-------:| -----:|-------:|-------:|-------:|--------:
 file premission       |    numero di hard links del file o il numero di directory entries contenute  | owner name       |  owner group       |  file size     |     Mese di modifica   |  giorno di modifica      |   anno/ora di modifica |     nome del file o directory o link  
 
+
 Prima della struttura a tabella è presente una riga che inizia con `total` che indica la dimensione totale dei file contenuti nella directory, visualizzata in numero di blocchi ( 512 bytes per blocco) o in bytes.
 
-All'interno della colonna 1, potrebbero esserci 2 attributi aggiuntivi:
+***All'interno della colonna 1, potrebbero esserci:***
 
-* **`+`**: ACl (Access Control List) abilitato
-* **`@`**: External Attribute
+* 2 attributi aggiuntivi alla fine della stringa:
+    * **`+`**: ACl (Access Control List) abilitato
+    * **`@`**: External Attribute
+
+* 2 attributi aggiuntivi all'inizio della stringa:
+    * **`l`**: link simbolico
+    * **`d`**: directory
+>Esempio per il secondo punto:
+![](img/l_d_example.png)
+
+***File permissions, colonna 1:***
+
+le file permissions sono rappresentate da 3 gruppi di 3 caratteri, che rappresentano i permessi di lettura, scrittura e esecuzione per l'utente(owner), il gruppo e gli altri utenti.
+
+* `r` = leggibile
+* `w` = scrivibile
+* `x` = eseguibile
 
 
-**File permissions:**
-* r = leggibile
-* w = scrivibile
-* x = eseguibile
+<br>
 
-Le ***directorys*** sono dei file che contengono `directory entries`, la dimensione che viene visualizzata è quella usata per immagazzinare le *meta information* (direcory entries) per quella directory.<br>
-Per visualizzare la dimensione su **disco** usare il comando [`du`](#du)
+### **`ls -s`**
+Rappresenta il numero di blocchi occupati dai file (*prima colonna*), che poi devono essere moltiplicati per la dimensione del blocco per ottenere la dimensione in bytes
+
+**Vengono presi in considerezione solo i file, non le directory**
+>Esempio:
+![](img/ls-s.png)
 
 
 ## **du**
@@ -152,11 +172,11 @@ Per visualizzare la dimensione dei file e delle directory in un formato più leg
 
 >Esempio:
 >```bash
->du DISCLAIMER\authors\and\publisher. txt
+>du DISCLAIMER\authors\and\publisher.txt
 >```
 >il comando restituisce un risultato del tipo:
 >```bash
->4.0K	DISCLAIMER authors and publisher. txt
+>4.0K	DISCLAIMER authors and publisher.txt
 >```
 ><br>
 
@@ -170,6 +190,13 @@ nano [file_name]
 Una volta eseguito il comando da Terminale, verrà aperto l'editor di testo sul file che si vuole modificare.
 
 Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL + X**, se sono state effettuate delle modifiche vi verrà chiesto se volete sovrascrivere il file. 
+
+## **cat**
+Visualizza il contenuto di un file di testo senza la possibilità di modificare
+
+```bash
+cat [options] [file_name]
+```
 
 ## **id**
 Visualizza l'ID dell'utente corrente
@@ -189,6 +216,20 @@ Differenti opzioni:
 
 >Esempio per la prima opzione: `id <user name>`
 ![](img/idCommand.png)
+
+
+<br>
+
+ ## **diskutil info / | grep "Block Size"**
+Visualizza la dimensione del blocco del filesystem
+
+<br>
+
+![](img/blockSize.png)
+
+* **Device Block Size**: è il blocco vero e proprio usato dall'hardware hard drive controller e non può essere cambiato
+* **Allocation Block Size**: è usato dal filesystem e viene inizializzato quando la partizione del drive viene formattata
+
 # Parametri
 
 I parametri qui sotto elencati sono quelli più utilizzati, per una lista completa si può consultare la documentazione con il comando [man](#man)
@@ -198,10 +239,10 @@ I parametri qui sotto elencati sono quelli più utilizzati, per una lista comple
 
 # Vocabolario
 
-* **Hard Link**: un hard link è un file che punta ad un altro file, in pratica è un alias del file originale. Se si elimina il file originale, il hard link rimane invariato.
+* **Hard Link**: 
+
+* **Soft links**:
 
 * **Path**: una stringa che identifica la posizione di una specifica directory o file.
 
 * **Directory entry**: un file che contiene informazioni su un file o una directory, come ad esempio il nome del file, la data di creazione, la dimensione, ecc.
-
-* **Soft links**: un soft link è un file che contiene il path del file originale, in pratica è un alias del file originale. Se si elimina il file originale, il soft link diventa un file rotto.
