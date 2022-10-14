@@ -1,3 +1,16 @@
+# INDICE
+
+* [Shell](#shell)
+* [Da dove prende i comandi il terminale?](#da-dove-prende-i-comandi-il-terminale)
+* [UNIX file system](#unix-file-system)
+* [Working directory](#working-directory)
+* [Filesystem block](#filesystem-block)
+* [Caratteri speciali nei nomi dei file e directory](#caratteri-speciali-nei-nomi-dei-file-e-directory)
+* [Comandi](#comandi)
+* [Parametri](#parametri)
+* [Vocabolario](#vocabolario)
+
+
 # Shell
 I sistemi UNIX mettono a disposizione differenti tipi di Shell, elencati di seguito:
 * sh
