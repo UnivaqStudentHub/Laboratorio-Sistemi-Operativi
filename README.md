@@ -202,9 +202,7 @@ Per visualizzare la dimensione dei file e delle directory in un formato più leg
 >```bash
 >du DISCLAIMER\authors\and\publisher.txt
 >```
-
-Permette di ottenere il path specificato all'interno di un file che risente del soft-link
-
+>
 >il comando restituisce un risultato del tipo:
 >```bash
 >4.0K	DISCLAIMER authors and publisher.txt
@@ -214,32 +212,19 @@ Permette di ottenere il path specificato all'interno di un file che risente del 
 ## **nano**
 Editor di testo di UNIX, permette la modifica di file di testo da CLI
 
->```bash 
->nano [file_name]
->```
+```bash 
+nano [file_name]
+```
 
 Una volta eseguito il comando da Terminale, verrà aperto l'editor di testo sul file che si vuole modificare.
 
 Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL + X**, se sono state effettuate delle modifiche vi verrà chiesto se volete sovrascrivere il file. 
 
-## **touch**
-`touch` è un comando che permette di impostare la data e ora di ultima modifica e/o di ultimo accesso di uno o più file e directory. In generale, viene usato da molti per creare dei file vuoti rapidamente.
->Esempio: 
->```bash 
->touch test.txt
->```
-><br>
-
-<br>
-
-
-![](img/touch.png)
-
 ## **readlink**
 `readlink` viene usato per leggere il path contenuto all'interno di un file che risente del soft-link.
->```bash
->readlink [options] [file]
->```
+```bash
+readlink [options] [file]
+```
 
 
 ![](img/readlink.png)
@@ -247,9 +232,9 @@ Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL +
 ## **cat**
 Visualizza il contenuto di un file di testo senza la possibilità di modificarlo
 
->```bash
->cat [options] [file_name]
->```
+```bash
+cat [options] [file_name]
+```
 ## **id**
 Visualizza l'ID dell'utente corrente
     
@@ -279,7 +264,7 @@ Visualizza la dimensione del blocco del filesystem
 <br>
 
 ![](img/blockSize.png)
-C
+
 * **Device Block Size**: è il blocco vero e proprio usato dall'hardware hard drive controller e non può essere cambiato
 * **Allocation Block Size**: è usato dal filesystem e viene inizializzato quando la partizione del drive viene formattata
 
@@ -315,6 +300,83 @@ rimuove una directory se è vuota
 rmdir [options] [directory_name]
 ```
 
+## **touch**
+`touch` è un comando che permette di impostare la data e ora di ultima modifica e/o di ultimo accesso di uno o più file e directory. In generale, viene usato da molti per creare dei file vuoti rapidamente.
+>Esempio: 
+>```bash 
+>touch pluto.txt
+>```
+><br>
+
+<br>
+
+
+![](img/touch.png)
+
+## **cp**
+`cp` è un comando che permette di copiare file e directory
+
+```bash
+cp [options] [source] [destination]
+```
+
+
+>Esempio:<br>
+> copia di un solo file da una specifica directory a quella corrente definita dal punto **"."**<br>
+>```bash
+>cp /A/paperino .
+>```
+>![](img/cpFile.png)
+
+>Esempio:<br>
+> copia di una directory da una specifica directory a quella corrente definita dal punto **"."**<br>
+>```bash
+>cp -r /A/C .
+>```
+>![](img/cpDirectory.png)
+
+### **`cp -r`**
+Per copiare una directory è necessario utilizzare l'opzione `-r` che permette di copiare anche le directory interne , in poche parole `-r`chiede di fare una copia **ricorsiva**
+
+
+
+## **mv**
+`mv` è un comando che permette di spostare file e directory
+
+```bash
+mv [options] [source] [destination]
+```
+
+***In questo caso le directory e i relativi sottofile e sottodirectory vengono spostate anche senza l'opzione `-r`***
+
+>Esempio:<br>
+> spostamento di una directory da una specifica directory a quella corrente definita dal punto **"."**<br>
+>```bash
+>mv /A/C .
+>```
+>![](img/mvDirectory.png)
+
+<br>
+
+Per rinominare un file o directory si può utilizzare il comando `mv` con la seguente sintassi:
+```bash
+mv [source] [destination]
+```
+In cui `source` e `destination` sono rispettivamente il file o directory da rinominare e il nuovo nome che si vuole dare, ed entrambe si trovano nella stessa directory.
+
+>Esempio:<br>
+> ```bash
+>mv topolino.txt yupi.txt
+>```
+>![](img/mvRename.png)
+><br>
+> Nella shell apparirà così:
+>![](img/mvRenameShell.png)
+>È stato creato prima un file di testo chiamato `topolino` e poi rinominato in `yupi`
+>
+><br>
+
+<br>
 
 ## **chmod**
 Modifica i permessi di un file o di una directory
