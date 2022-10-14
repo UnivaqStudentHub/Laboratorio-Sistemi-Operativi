@@ -72,6 +72,12 @@ Per cambiare la directory di lavoro si usa la funzione `chdir`, che sarebbe una 
 # Filesystem block
 La grandezza dei blocchi rappresenta la quantità di dati che il filesystem usa per leggere e scrivere data
 
+Quindi potrebbe succedere che un file, dalla dimenzione di 1 kb, su disco vada ad occupare 4kb, essendo quello il blocco minimo allocabile dal filesystem
+
+![](img/block.png)
+
+**Larger block size** 
+
 # Comandi
 
 ***Per agevolare la scrittura dei comandi, il tasto Tab spesso può essere utilizzato per autocompletare il comando o il nome del file.***
@@ -129,6 +135,30 @@ All'interno della colonna 1, potrebbero esserci 2 attributi aggiuntivi:
 * r = leggibile
 * w = scrivibile
 * x = eseguibile
+
+Le ***directorys*** sono dei file che contengono `directory entries`, la dimensione che viene visualizzata è quella usata per immagazzinare le *meta information* (direcory entries) per quella directory.<br>
+Per visualizzare la dimensione su **disco** usare il comando [`du`](#du)
+
+
+## **du**
+Mostra la dimensione dei file e delle directory su **disco**
+
+```bash 
+du [options] [location]
+```
+Il comando restituisce un numero che deve essere moltiplicato per il blocco minimale allocabile dal filesystem, così da ottenere la dimensione in bytes. (vedi [Filesystem block](#filesystem-block))
+
+Per visualizzare la dimensione dei file e delle directory in un formato più leggibile si può utilizzare il comando `du -h`
+
+>Esempio:
+>```bash
+>du DISCLAIMER\authors\and\publisher. txt
+>```
+>il comando restituisce un risultato del tipo:
+>```bash
+>4.0K	DISCLAIMER authors and publisher. txt
+>```
+><br>
 
 ## **nano**
 Editor di testo di UNIX, permette la modifica di file di testo da CLI
