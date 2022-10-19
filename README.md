@@ -30,7 +30,7 @@ echo $SHELL
 which $SHELL
 ```
 
-Per visualizzare le shell disponibili possiamo scrivere il seguente comando: 
+Per visualizzare le shell disponibili nel sistema che stiamo utilizzando, possiamo utilizzare il seguente comando: 
 
 ```bash
 cat /etc/shells
@@ -44,7 +44,7 @@ Per cambiare shell basta scrivere il nome della shell che si vuole utilizzare
 zsh
 ```
 # Da dove prende i comandi il terminale?
-Quando scriviamo un comando nel terminale "the system" cerca l'implementazione del comando all'interno di un set predefinito di *direcories*, che in questo casi si trova in **`$PATH`**.
+Quando scriviamo un comando nel terminale, il sistema operativo cerca l'implementazione del comando all'interno di un set predefinito di *directories*, specificate all'interno della variabile `$PATH`.
 
 # UNIX file system
 
@@ -82,9 +82,9 @@ Esistono due tipologie di directory:
 
 ![](img/workingDirectory.png)
 
-Per cambiare la directory di lavoro si usa la funzione `chdir`, che sarebbe una system call
+Per cambiare la directory di lavoro si utilizza una system-call, ossia la funzione `chdir`.
 
-Le ***directories*** sono dei file che contengono `directory entries`, la dimensione che viene visualizzata è quella usata per immagazzinare le *meta information* (direcory entries) per quella directory.<br>
+Le ***directories*** sono dei files che contengono `directory entries`, ossia dei files che contengono altri files; la dimensione che viene visualizzata è quella usata per immagazzinare le *meta information* (directory entries) per quella directory.<br>
 Per visualizzare la dimensione su **disco** usare il comando [`du`](#du)
 
 # Filesystem block
