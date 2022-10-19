@@ -39,10 +39,13 @@ Il comando `cat` non è l'unico che consente di visualizzare file, in seguito ve
 
 Per cambiare shell basta scrivere il nome della shell che si vuole utilizzare
 >Ad esempio: 
+>```bash
+>zsh
+>```
+><br>
 
-```bash
-zsh
-```
+<br>
+
 # Da dove prende i comandi il terminale?
 Quando scriviamo un comando nel terminale, il sistema operativo cerca l'implementazione del comando all'interno di un set predefinito di *directories*, specificate all'interno della variabile `$PATH`.
 
@@ -57,9 +60,7 @@ La directory ***root*** in UNIX viene rappresentata con il simbolo `/`, segue un
 
 
 >Analizziamo il Path ```/home/utente```. Ci troviamo nella directory `utente` che è una sottocartella di `home` che a sua volta è una sottocartella di `/`
-
-
-![](img/fileSystem.jpg)
+>![](img/fileSystem.jpg)
 
 Per navigare tra le directory si utilizza il comando:
 ```bash
@@ -97,14 +98,10 @@ Quindi potrebbe succedere che un file, dalla dimenzione di 1 kb, su disco vada a
 * Un **larger block size** aiuta ad aumentar ele performance sul disco nelle operazioni I/O. Questo perchè il disco può leggere e scrivere dati per un più lungo periodo di tempo sullo stesso blocco, per poi passare alla ricerca del blocco successivo
 * Allo stesso tempo se abbiamo molti file piccoli, come succede in `/etc`, avremmo uno spreco di spazio essendo che in uno stesso blocco non possono esserci dati di più file
 
-# Caratteri speciali nei nomi dei file e directory
-//IN ARRIVO
-
-
 # Comandi
 
 ***Per agevolare la scrittura dei comandi, il tasto Tab spesso può essere utilizzato per autocompletare il comando o il nome del file.***
-## **man**
+## **<span style="color:red">man</span>**
 Restituisce la documentazione per un determinato comando, si utilizza:
 ```bash
 man [options]
@@ -119,14 +116,43 @@ Di seguito un altro uso interessante di `man`, che permette di visualizzare tutt
 man -k <keyword>
 ```
 
-## **ps**
+## **<span style="color:red">nano</span>**
+Editor di testo di UNIX, permette la modifica di file di testo da CLI
+
+```bash 
+nano [file_name]
+```
+
+Una volta eseguito il comando da Terminale, verrà aperto l'editor di testo sul file che si vuole modificare.
+
+Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL + X**, se sono state effettuate delle modifiche vi verrà chiesto se volete sovrascrivere il file. 
+
+## **<span style="color:red">cat</span>**
+* Il suo ruolo principale è quello d concatenare i files
+* Appropriato per leggere piccoli files
+* Visualizza il contenuto di un file di testo senza la possibilità di modificarlo.
+
+```bash
+cat [options] [file_name]
+```
+
+## **<span style="color:red">less</span>**
+
+* Appropriato per leggere grandi file
+* Possibilità di muoversi con comandi da tastiera nel file
+
+```bash
+less [file]
+```
+
+## **<span style="color:red">ps</span>**
 Visualizza i processi in esecuzione con vari gradi di dettaglio a seconda dei parametri specificati nel coman
 
 ```bash
 ps [options]
 ```
 
-## **ls**
+## **<span style="color:red">ls</span>**
 Mostra il Path relativo alla directory in considerazione
 
 ```bash
@@ -201,7 +227,7 @@ Mostra i file presenti nella directory mettendoli in colonna.
 ### **`ls -t`**
 Con l'argomento `-t` è possibile anche ordinarli in base all'ultima modifica effettuata.
 
-## **du**
+## **<span style="color:red">du</span>**
 Mostra la dimensione dei file e delle directory su **disco**
 
 ```bash 
@@ -222,18 +248,7 @@ Per visualizzare la dimensione dei file e delle directory in un formato più leg
 >```
 ><br>
 
-## **nano**
-Editor di testo di UNIX, permette la modifica di file di testo da CLI
-
-```bash 
-nano [file_name]
-```
-
-Una volta eseguito il comando da Terminale, verrà aperto l'editor di testo sul file che si vuole modificare.
-
-Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL + X**, se sono state effettuate delle modifiche vi verrà chiesto se volete sovrascrivere il file. 
-
-## **readlink**
+## **<span style="color:red">readlink</span>**
 `readlink` viene usato per leggere il path contenuto all'interno di un file che risente del soft-link.
 ```bash
 readlink [options] [file]
@@ -242,13 +257,7 @@ readlink [options] [file]
 
 ![](img/readlink.png)
 
-## **cat**
-Visualizza il contenuto di un file di testo senza la possibilità di modificarlo
-
-```bash
-cat [options] [file_name]
-```
-## **id**
+## **<span style="color:red">id</span>**
 Visualizza l'ID dell'utente corrente
     
 ```bash
@@ -271,7 +280,7 @@ Differenti opzioni:
 
 <br>
 
- ## **diskutil info / | grep "Block Size"**
+ ## **<span style="color:red">diskutil info / | grep "Block Size</span>**
 Visualizza la dimensione del blocco del filesystem
 
 <br>
@@ -281,7 +290,7 @@ Visualizza la dimensione del blocco del filesystem
 * **Device Block Size**: è il blocco vero e proprio usato dall'hardware hard drive controller e non può essere cambiato
 * **Allocation Block Size**: è usato dal filesystem e viene inizializzato quando la partizione del drive viene formattata
 
-## **mkdir**
+## **<span style="color:red">mkdir</span>**
 crea una directory
 
 ```bash
@@ -306,14 +315,53 @@ Crea delle directory intermedie nel path
 
 
 
-## **rmdir**
-rimuove una directory se è vuota
+## **<span style="color:red">rmdir</span>**
+Rimuove una directory se è vuota
 
 ```bash
 rmdir [options] [directory_name]
 ```
 
-## **touch**
+<br>
+
+ 
+
+### **`rmdir -p <pathname>`**
+Rimuove le directory intermedie scritte nel path
+
+>Esempio:
+>```bash
+>rmdir -p a/c
+>```
+>in questo caso viene elimitata sia la directory a che c
+> <br>**Uguale a:**
+>```bash
+>rmdir -p a/c a
+>```
+><br>
+
+<br>
+
+## **<span style="color:red">rm</span>**
+Rimuove un singolo file o delle directory non vuote
+```bash
+rm [options] [file_name]
+```
+
+
+
+>Esempio di eliminazione di un file all'interno della directory in cui ci troviamo con il terminale:
+>```bash
+>rm topolino
+>```
+>![](img/rm_singolo_file.png)
+
+### `rm -r /A`
+Vengono eliminate in maniera ricorsiva tutte le sottodirectory e i file, anche non vuoti
+![](img/rm_tutto.png)
+***Si consigli di usare l'opzione `-i` quando viene usata l'eliminazione ricorsiva.<br> Il comando `-i` farà si che l'utente veda i file che verranno cancellati e verrà richiesta una conferma dell'azione***
+
+## **`touch`**
 `touch` è un comando che permette di impostare la data e ora di ultima modifica e/o di ultimo accesso di uno o più file e directory. In generale, viene usato da molti per creare dei file vuoti rapidamente.
 >Esempio: 
 >```bash 
@@ -326,7 +374,7 @@ rmdir [options] [directory_name]
 
 ![](img/touch.png)
 
-## **cp**
+## **<span style="color:red">cp</span>**
 `cp` è un comando che permette di copiare file e directory
 
 ```bash
@@ -351,9 +399,7 @@ cp [options] [source] [destination]
 ### **`cp -r`**
 Per copiare una directory è necessario utilizzare l'opzione `-r` che permette di copiare anche le directory interne , in poche parole `-r`chiede di fare una copia **ricorsiva**
 
-
-
-## **mv**
+## **`mv`**
 `mv` è un comando che permette di spostare file e directory
 
 ```bash
@@ -389,9 +435,10 @@ In cui `source` e `destination` sono rispettivamente il file o directory da rino
 >
 ><br>
 
+
 <br>
 
-## **chmod**
+## **<span style="color:red">chmod</span>**
 Modifica i permessi di un file o di una directory
 
 ```bash
@@ -407,9 +454,14 @@ I parametri qui sotto elencati sono quelli più utilizzati, per una lista comple
 
 # Vocabolario
 
-* **Hard Link**: IN ARRIVO
+* **Soft links**: Chiamati anche link simbolici, sono dei file che puntano al file vero e proprio e conservano dentro di loro il nome del file a cui puntano ( in Windows lo puoi pensare come un file "Collegamento")
 
-* **Soft links**: IN ARRIVO
+
+* **Hard Link**: è l'equivalente del file che si trova nell'HDD. Sono reference o puntatori verso punti nell'hdd. <br> La caratteristica principale dell'`Hard Link` che lo differisce dal `Soft Link` è il fatto che tramite la cancellazione del file originale non andremo a intaccare l'`Hard Link`, mentre invece il `Soft Link` diventerebbe inutilizzabile.
+
+
+
+
 
 * **Path**: una stringa che identifica la posizione di una specifica directory o file.
 
