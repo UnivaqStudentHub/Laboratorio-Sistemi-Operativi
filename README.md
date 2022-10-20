@@ -5,7 +5,6 @@
 * [UNIX file system](#unix-file-system)
 * [Working directory](#working-directory)
 * [Filesystem block](#filesystem-block)
-* [Caratteri speciali nei nomi dei file e directory](#caratteri-speciali-nei-nomi-dei-file-e-directory)
 * [Comandi](#comandi)
 * [Parametri](#parametri)
 * [Vocabolario](#vocabolario)
@@ -136,7 +135,7 @@ Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL +
 cat [options] [file_name]
 ```
 
-## **<span style="color:red">less</span>**
+## **<span style="color:red ">less</span>**
 
 * Appropriato per leggere grandi file
 * Possibilità di muoversi con comandi da tastiera nel file
