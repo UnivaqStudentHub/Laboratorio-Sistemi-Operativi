@@ -5,7 +5,9 @@
 * [UNIX file system](#unix-file-system)
 * [Working directory](#working-directory)
 * [Filesystem block](#filesystem-block)
-* [Comandi](#comandi)
+* [Wildcards](#wildcards)
+* [Comandi Shell](#comandi-shell)
+* [Comandi per file](#comandi-per-file)
 * [Parametri](#parametri)
 * [Vocabolario](#vocabolario)
 
@@ -97,7 +99,31 @@ Quindi potrebbe succedere che un file, dalla dimenzione di 1 kb, su disco vada a
 * Un **larger block size** aiuta ad aumentar ele performance sul disco nelle operazioni I/O. Questo perchè il disco può leggere e scrivere dati per un più lungo periodo di tempo sullo stesso blocco, per poi passare alla ricerca del blocco successivo
 * Allo stesso tempo se abbiamo molti file piccoli, come succede in `/etc`, avremmo uno spreco di spazio essendo che in uno stesso blocco non possono esserci dati di più file
 
-# Comandi
+# Wildcards
+permettono la definizione di pattern e si possono utilizzare **solo nei path delle varie shell** con i suoi [comandi](#comandi-shell)
+
+* `*` : restituisce in output tutti i path 
+    * `parola/lettera/wildcard*`  : restituisce tutte i path che **iniziano** con quella `<parola>` o `<lettera>` o  `<wildcard>`  
+    * `*parola/lettera/wildcard` : restituisce tutte i path che **terminano** con quella `<parola>` o  `<lettera>` o `<wildcard>`
+
+
+* `?` : restituisce tutti i path che hanno **un solo carattere** 
+    * `parola/lettera/wildcard?` : restituisce tutti i path che dopo la `<parola>` o  `<lettera>` o `<wildcard>` terminano con **un solo carattere**
+    * `?parola/lettera/wildcard` : restituisce tutti i path che prima della `<parola>` o  `<lettera>` o `<wildcard>`  iniziano con **un solo** carattere 
+
+
+* `[]` : restituisce tutti i path formati da **un solo carattere** di un certo **range di caratteri** ( di solito si utilizza insieime a `*`) 
+    * `[agd]` : restituisce tutte le directory formate da **una** delle lettere all'interno
+    * `[a-g]` : restituisce tutte le directory formate da **una** delle lettere all'interno del range (estremi inclusi)
+    * `[^a-d]` oppure `[!a-d]`: restituisce tutte le directory formate da **una** delle lettere che **non sono nel range** (**reverse range**)
+
+
+* `{}` : restituisce tutti i path formati da delle combinazioni di wildcard e di parole scritte all'interno delle parentesi (si possono usare più combinazioni basta che vengano divise da una `,`)
+
+
+* `\` : si usa prima di una wildcard per farla leggere come stringa (anche lo stesso \ (backslash))
+
+# Comandi Shell
 
 ***Per agevolare la scrittura dei comandi, il tasto Tab spesso può essere utilizzato per autocompletare il comando o il nome del file.***
 ## **<span style="color:red">man</span>**
@@ -126,14 +152,6 @@ Una volta eseguito il comando da Terminale, verrà aperto l'editor di testo sul 
 
 Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL + X**, se sono state effettuate delle modifiche vi verrà chiesto se volete sovrascrivere il file. 
 
-## **<span style="color:red">cat</span>**
-* Il suo ruolo principale è quello d concatenare i files
-* Appropriato per leggere piccoli files
-* Visualizza il contenuto di un file di testo senza la possibilità di modificarlo.
-
-```bash
-cat [options] [file_name]
-```
 
 ## **<span style="color:red ">less</span>**
 
@@ -444,6 +462,16 @@ Modifica i permessi di un file o di una directory
 chmod [options] [permissions] [file_name]
 ```
 
+# Comandi per file
+comandi utilizzati per interagire con i vari file 
+## **<span style="color:red">cat</span>**
+* Il suo ruolo principale è quello d concatenare i files
+* Appropriato per leggere piccoli files
+* Visualizza il contenuto di un file di testo senza la possibilità di modificarlo.
+
+```bash
+cat [options] [file_name]
+```
 # Parametri
 
 I parametri qui sotto elencati sono quelli più utilizzati, per una lista completa si può consultare la documentazione con il comando [man](#man)
