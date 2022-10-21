@@ -141,27 +141,6 @@ Di seguito un altro uso interessante di `man`, che permette di visualizzare tutt
 man -k <keyword>
 ```
 
-## **<span style="color:red">nano</span>**
-Editor di testo di UNIX, permette la modifica di file di testo da CLI
-
-```bash 
-nano [file_name]
-```
-
-Una volta eseguito il comando da Terminale, verrà aperto l'editor di testo sul file che si vuole modificare.
-
-Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL + X**, se sono state effettuate delle modifiche vi verrà chiesto se volete sovrascrivere il file. 
-
-
-## **<span style="color:red ">less</span>**
-
-* Appropriato per leggere grandi file
-* Possibilità di muoversi con comandi da tastiera nel file
-
-```bash
-less [file]
-```
-
 ## **<span style="color:red">ps</span>**
 Visualizza i processi in esecuzione con vari gradi di dettaglio a seconda dei parametri specificati nel coman
 
@@ -471,6 +450,27 @@ comandi utilizzati per interagire con i vari file
 
 ```bash
 cat [options] [file_name]
+```
+
+## **<span style="color:red">nano</span>**
+Editor di testo di UNIX, permette la modifica di file di testo da CLI
+
+```bash 
+nano [file_name]
+```
+
+Una volta eseguito il comando da Terminale, verrà aperto l'editor di testo sul file che si vuole modificare.
+
+Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL + X**, se sono state effettuate delle modifiche vi verrà chiesto se volete sovrascrivere il file. 
+
+
+## **<span style="color:red ">less</span>**
+
+* Appropriato per leggere grandi file
+* Possibilità di muoversi con comandi da tastiera nel file
+
+```bash
+less [file]
 ```
 # Parametri
 
