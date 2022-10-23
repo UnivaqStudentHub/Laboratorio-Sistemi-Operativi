@@ -7,7 +7,8 @@
 * [Filesystem block](#filesystem-block)
 * [Wildcards](#wildcards)
 * [Comandi Shell](#comandi-shell)
-* [Comandi per file](#comandi-per-file)
+* [Comandi per scrittura su file](#comandi-per-file)
+* [Filters, Redirection e Pipelines](#filters-redirection-e-pipelines)
 * [Parametri](#parametri)
 * [Vocabolario](#vocabolario)
 
@@ -100,19 +101,24 @@ Quindi potrebbe succedere che un file, dalla dimenzione di 1 kb, su disco vada a
 * Allo stesso tempo se abbiamo molti file piccoli, come succede in `/etc`, avremmo uno spreco di spazio essendo che in uno stesso blocco non possono esserci dati di più file
 
 # Wildcards
+
+*IMPORTANTE!*
+*Le wildcards sono tradotte dalla shell prima di essere passate al comando, e quindi non sono parte del comando stesso* 
+
+
 permettono la definizione di pattern e si possono utilizzare **solo nei path delle varie shell** con i suoi [comandi](#comandi-shell)
 
 * `*` : restituisce in output tutti i path 
-    * `parola/lettera/wildcard*`  : restituisce tutte i path che **iniziano** con quella `<parola>` o `<lettera>` o  `<wildcard>`  
-    * `*parola/lettera/wildcard` : restituisce tutte i path che **terminano** con quella `<parola>` o  `<lettera>` o `<wildcard>`
+    * `<parola/lettera/wildcard>*`  : restituisce tutte i path che **iniziano** con quella `<parola>` o `<lettera>` o  `<wildcard>`  
+    * `*<parola/lettera/wildcard>` : restituisce tutte i path che **terminano** con quella `<parola>` o  `<lettera>` o `<wildcard>`
 
 
 * `?` : restituisce tutti i path che hanno **un solo carattere** 
-    * `parola/lettera/wildcard?` : restituisce tutti i path che dopo la `<parola>` o  `<lettera>` o `<wildcard>` terminano con **un solo carattere**
-    * `?parola/lettera/wildcard` : restituisce tutti i path che prima della `<parola>` o  `<lettera>` o `<wildcard>`  iniziano con **un solo** carattere 
+    * `<parola/lettera/wildcard?>` : restituisce tutti i path che dopo la `<parola>` o  `<lettera>` o `<wildcard>` terminano con **un solo carattere**
+    * `?<parola/lettera/wildcard>` : restituisce tutti i path che prima della `<parola>` o  `<lettera>` o `<wildcard>`  iniziano con **un solo** carattere 
 
 
-* `[]` : restituisce tutti i path formati da **un solo carattere** di un certo **range di caratteri** ( di solito si utilizza insieime a `*`) 
+* `[]` : restituisce tutti i path formati da **un solo carattere** di un certo **range di caratteri** ( di solito si utilizza insieme a `*`) 
     * `[agd]` : restituisce tutte le directory formate da **una** delle lettere all'interno
     * `[a-g]` : restituisce tutte le directory formate da **una** delle lettere all'interno del range (estremi inclusi)
     * `[^a-d]` oppure `[!a-d]`: restituisce tutte le directory formate da **una** delle lettere che **non sono nel range** (**reverse range**)
@@ -122,6 +128,7 @@ permettono la definizione di pattern e si possono utilizzare **solo nei path del
 
 
 * `\` : si usa prima di una wildcard per farla leggere come stringa (anche lo stesso \ (backslash))
+    * per scrivere il carattere `\` si usa `\\`
 
 # Comandi Shell
 
@@ -174,7 +181,7 @@ Prima della struttura a tabella è presente una riga che inizia con `total` che 
 
 * 2 attributi aggiuntivi alla fine della stringa:
     * **`+`**: ACl (Access Control List) abilitato
-    * **`@`**: External Attribute
+    * **`@`**: External Attribute ==> metadata non interpretati dal filesystem
 
 * 2 attributi aggiuntivi all'inizio della stringa:
     * **`l`**: link simbolico
@@ -222,6 +229,81 @@ Mostra i file presenti nella directory mettendoli in colonna.
 
 ### **`ls -t`**
 Con l'argomento `-t` è possibile anche ordinarli in base all'ultima modifica effettuata.
+
+
+
+## **<span style="color:red">chmod</span>**
+Modifica i permessi di un file o di una directory
+
+```bash
+chmod [permissions] [file_name]
+```
+
+I permessi possono essere modificati per:
+* user ( owner ) : `u`
+* group : `g`
+* others : `o`
+* all : `a`
+
+I permessi possono essere:
+* granted : `+`
+* revoked : `-`
+
+>Esempio:
+>```bash
+>chmod u-w pippo.txt
+>```
+> In questo caso revoco il permesso di scrittura all'utente owner del file `pippo.txt`
+
+>Esempio:
+>```bash
+>chmod ug+wx pippo.txt
+>```
+> in questo caso aggiungo allo user e aL gruppo il permesso di scrittura e di esecuzione nel file `pippo.txt`
+
+*Molte volte si utilizzano dei numeri invece delle lettere, vediamo come funzionano:*
+
+| Octal | Binary |
+|-------|--------|
+| 0     | 0 0 0  |
+| 1     | 0 0 1  |
+| 2     | 0 1 0  |
+| 3     | 0 1 1  |
+| 4     | 1 0 0  |
+| 5     | 1 0 1  |
+| 6     | 1 1 0  |
+| 7     | 1 1 1  |
+
+
+Nel binario ogni bit corrisponde ad un permesso, in questo modo:`r | w | x`
+
+La combinazione di 3 numeri ottali corrisponde ai permessi per un utente, un gruppo o tutti gli altri utenti: `u | g | o`
+
+Quindi alla fine si ottine un numero di 3 cifre, che se vengono sostituite con il binario corrispondente avremo: `rwx | rwx | rwx`
+
+**Naturalmente `1` corrisponde a `+` e `0` a `-`**
+
+>Esempio:
+>```bash
+>chmod 777 pippo.txt
+>```
+> in questo caso aggiungo all'utente, al gruppo e a tutti gli altri il permesso di scrittura, lettura ed esecuzione di `pippo.txt`
+
+### Modificare i file ACLs
+
+>Esempio:
+>```bash
+> chmod +a "user:user1 allow read,write,append" file.txt
+>```
+> ///
+
+
+## **<span style="color:red">xattr</span>**
+```bash
+xattr [options] [file_name]
+```
+Viene usato per vedere modificare o vedere i metadati di un file, include directory o link simbolici.
+
 
 ## **<span style="color:red">du</span>**
 Mostra la dimensione dei file e delle directory su **disco**
@@ -434,15 +516,12 @@ In cui `source` e `destination` sono rispettivamente il file o directory da rino
 
 <br>
 
-## **<span style="color:red">chmod</span>**
-Modifica i permessi di un file o di una directory
+# Comandi per scrittura su file
+Comandi utilizzati per interagire con i vari file 
 
-```bash
-chmod [options] [permissions] [file_name]
-```
+## **<span style="color:red">vi</span>**
+E' un text editor che lavora a linea di comando, molto più potente ad esempio del blocco note . Tutti i comandi, ad esempio quello di salvare o uscire, sono dati via tastiera
 
-# Comandi per file
-comandi utilizzati per interagire con i vari file 
 ## **<span style="color:red">cat</span>**
 * Il suo ruolo principale è quello d concatenare i files
 * Appropriato per leggere piccoli files
@@ -451,7 +530,14 @@ comandi utilizzati per interagire con i vari file
 ```bash
 cat [options] [file_name]
 ```
+## **<span style="color:red ">less</span>**
 
+* Appropriato per leggere grandi file
+* Possibilità di muoversi con comandi da tastiera nel file
+
+```bash
+less [file]
+```
 ## **<span style="color:red">nano</span>**
 Editor di testo di UNIX, permette la modifica di file di testo da CLI
 
@@ -463,15 +549,69 @@ Una volta eseguito il comando da Terminale, verrà aperto l'editor di testo sul 
 
 Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL + X**, se sono state effettuate delle modifiche vi verrà chiesto se volete sovrascrivere il file. 
 
+# Filters, Redirection e Pipelines
+* Il **filtro** è un programma o una subrutine che prende dati in standard input e "scrive" il risultato allo standard output. Parte più importante è che il filtro **NON** modifica il file di input.
+* La **redirection** è un meccanismo che permette di cambiare il flusso di dati in ingresso e in uscita di un programma tramite l'utilizzo di `>` e `<`
+* Le **pipelines** possono anche essere utilizzate insieme ai filtri. Una pipeline è una sequenza di comandi collegati tramite pipe `|` che permette di passare il risultato di un comando come input di un altro comando.
 
-## **<span style="color:red ">less</span>**
-
-* Appropriato per leggere grandi file
-* Possibilità di muoversi con comandi da tastiera nel file
+## **<span style="color:red">head</span>**
+`head` è un filtro che permette di visualizzare le prime righe di un file di testo
 
 ```bash
-less [file]
+head [options] [file_name]
 ```
+
+**Per default sono visualizzare le prime 10 linee**
+
+### **`head -n`**
+
+```bash
+head -n [number] [file_name]
+```
+Il `number` indica il numero di righe che si vogliono visualizzare
+
+
+### **`head -c`**
+```bash
+head -c [number] [file_name]
+```
+Il `number` indica il numero di bytes che si vogliono visualizzare ( 1 byte = 1 char )
+
+## **<span style="color:red">tail</span>**
+`tail` è un filtro che permette di visualizzare le ultime righe di un file di testo
+
+```bash
+tail [options] [file_name]
+```
+Le opzioni sono le stesse di [head](#head--n), unica cosa è che i bytes e i caratteri verranno conteggiati dalla fine verso l'inizio del file
+
+## **<span style="color:red">sort</span>**
+`sort` è un filtro che permette di ordinare testo e file binari ( di default ordina in ordine alfabetico )
+
+**Verrà fatto il sort anche delle linee vuote, che verranno inserite a inizio file**
+
+```bash
+sort [options] [file_name]
+```
+
+## **<span style="color:red">nl</span>**
+`nl` è un filtro che permette di numerare le righe di un file di testo
+
+```bash
+nl [options] [file_name]
+```
+
+> Esempio:
+>```bash
+>nl -s '. ' -w 10 persone.txt
+>```
+>Esegue una formattazione personalizzata <br>
+> * Il comando `-w 10` indica che verrà tabulato di 10 <br>
+> * Il comando `-s '. '` indica che verrà inserito un punto e uno spazio tra il numero di riga e il testo
+> ![](img/nl.png)
+
+
+
 # Parametri
 
 I parametri qui sotto elencati sono quelli più utilizzati, per una lista completa si può consultare la documentazione con il comando [man](#man)
