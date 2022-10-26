@@ -91,40 +91,50 @@ Le ***directories*** sono dei files che contengono `directory entries`, ossia de
 Per visualizzare la dimensione su **disco** usare il comando [`du`](#du)
 
 # Filesystem block
-La grandezza dei blocchi rappresenta la quantità di dati che il filesystem usa per leggere e scrivere data
+* `Che cos'è un blocco?` È una sequenza di bytes / bit
 
-Quindi potrebbe succedere che un file, dalla dimenzione di 1 kb, su disco vada ad occupare 4kb, essendo quello il blocco minimo allocabile dal filesystem
+* `La dimensione di un blocco è l'unità di lavoro del filesystem`; la sua importanza è rilevante dato che viene impiegata dal filesystem per le operazioni di lettura/scrittura dei dati.
 
-![](img/block.png)
+* La dimensione minima che un blocco può avere su un disco fisso è di 16 bytes. 
 
-* Un **larger block size** aiuta ad aumentar ele performance sul disco nelle operazioni I/O. Questo perchè il disco può leggere e scrivere dati per un più lungo periodo di tempo sullo stesso blocco, per poi passare alla ricerca del blocco successivo
-* Allo stesso tempo se abbiamo molti file piccoli, come succede in `/etc`, avremmo uno spreco di spazio essendo che in uno stesso blocco non possono esserci dati di più file
+* Aumentare la dimensione di un blocco consente di migliorare le prestazioni di Input/Output sui file di grandi dimensioni, in quanto le operazioni di lettura/scrittura vengono concentrate per un periodo di tempo maggiore su un singolo blocco prima di spostarsi al successivo!
+
+* **Problema**: i file di piccole dimensioni come riportato di seguito, occupano più spazio di quanto previsto, questo perché i blocchi che li compongono sono più grandi!
+
+  Di seguito una immagine esplicativa! Il file dovrebbe pesare 1KB ma sul disco pesa 4KB!
+
+
+
+
+  ![](img/block.png)
+
 
 # Wildcards
+
+* `Cosa sono?` Sono dei simboli che nascondono dei pattern! Definiscono di fatti dei metodi per filtrare dei file per estensione / nome ed eseguire, nel caso, delle operazioni su di loro come una copia o uno spostamento da una cartella ad un'altra!
 
 *IMPORTANTE!*
 *Le wildcards sono tradotte dalla shell prima di essere passate al comando, e quindi non sono parte del comando stesso* 
 
-
-permettono la definizione di pattern e si possono utilizzare **solo nei path delle varie shell** con i suoi [comandi](#comandi-shell)
+Di seguito elenchiamo le wildcards introdotte a lezione:
 
 * `*` : restituisce in output tutti i path 
-    * `<parola/lettera/wildcard>*`  : restituisce tutte i path che **iniziano** con quella `<parola>` o `<lettera>` o  `<wildcard>`  
-    * `*<parola/lettera/wildcard>` : restituisce tutte i path che **terminano** con quella `<parola>` o  `<lettera>` o `<wildcard>`
+    * `<parola/lettera/wildcard>*`  : restituisce tutte i files che **iniziano** con quella `<parola>` o `<lettera>` o  `<wildcard>`  
+    * `*<parola/lettera/wildcard>` : restituisce tutte i files che **terminano** con quella `<parola>` o  `<lettera>` o `<wildcard>`
 
 
-* `?` : restituisce tutti i path che hanno **un solo carattere** 
-    * `<parola/lettera/wildcard?>` : restituisce tutti i path che dopo la `<parola>` o  `<lettera>` o `<wildcard>` terminano con **un solo carattere**
-    * `?<parola/lettera/wildcard>` : restituisce tutti i path che prima della `<parola>` o  `<lettera>` o `<wildcard>`  iniziano con **un solo** carattere 
+* `?` : restituisce tutti i files che hanno **un solo carattere** nel nome
+    * `<parola/lettera/wildcard?>` : restituisce tutti i files che dopo la `<parola>` o  `<lettera>` o `<wildcard>` terminano con **un solo carattere**
+    * `?<parola/lettera/wildcard>` : restituisce tutti i files che prima della `<parola>` o  `<lettera>` o `<wildcard>`  iniziano con **un solo** carattere 
 
 
-* `[]` : restituisce tutti i path formati da **un solo carattere** di un certo **range di caratteri** ( di solito si utilizza insieme a `*`) 
-    * `[agd]` : restituisce tutte le directory formate da **una** delle lettere all'interno
-    * `[a-g]` : restituisce tutte le directory formate da **una** delle lettere all'interno del range (estremi inclusi)
-    * `[^a-d]` oppure `[!a-d]`: restituisce tutte le directory formate da **una** delle lettere che **non sono nel range** (**reverse range**)
+* `[]` : restituisce tutti i files formati da **un solo carattere** o da un certo **range di caratteri** ( di solito si utilizza insieme a `*`) 
+    * `[agd]` : restituisce tutte le directory formate da **una** ed una sola delle lettere specificate (esempio a.txt, g.txt, d.txt ma non ag.txt, etc...)
+    * `[a-d]` : restituisce tutte le directory formate da **una** delle lettere all'interno del range (esempio a.txt, b.txt, c.txt, d.txt)
+    * `[^a-d]` oppure `[!a-d]`: restituisce tutte le directory formate da **una** delle lettere che **non sono specificate** (esempio k.txt, z.txt, e.txt)
 
 
-* `{}` : restituisce tutti i path formati da delle combinazioni di wildcard e di parole scritte all'interno delle parentesi (si possono usare più combinazioni basta che vengano divise da una `,`)
+* `{}` : restituisce tutti i files formati da delle combinazioni di wildcard e di parole scritte all'interno delle parentesi (si possono usare più combinazioni basta che vengano divise da una `,`)
 
 
 * `\` : si usa prima di una wildcard per farla leggere come stringa (anche lo stesso \ (backslash))
