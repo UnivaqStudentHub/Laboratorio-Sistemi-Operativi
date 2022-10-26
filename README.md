@@ -11,7 +11,7 @@
 * [Filters, Redirection e Pipelines](#filters-redirection-e-pipelines)
 * [Parametri](#parametri)
 * [Vocabolario](#vocabolario)
-
+* [Espressioni Regolari](#espressioni-regolari)
 
 # Shell
 I sistemi UNIX mettono a disposizione differenti tipi di Shell, elencati di seguito:
@@ -610,6 +610,67 @@ nl [options] [file_name]
 > * Il comando `-s '. '` indica che verrà inserito un punto e uno spazio tra il numero di riga e il testo
 > ![](img/nl.png)
 
+## **<span style="color:red">egrep</span>**
+
+Il comando **grep** o **egrep** (extended grep) cerca nel file di testo una riga di testo che corrisponde ad uno o più patterns passati come parametro
+
+> Esempio:
+> ![](img/egrep1.png)
+
+# Espressioni Regolari
+
+Similmente alle **wildcards** per i path, le espressioni regolari permettonop di creare dei pattern per accedere e leggere linee di file di testo (Esempio: identificare tutte le stringhe che rappresentano URLs, linee di commento, indirizzi e-mail).
+
+Esistono due tipi di espressioni regolari:
+
+* **Basic Regular Expressions (BRE)**
+* **Extended Regular Expressions (ERE)**
+
+Un'espressione regolare moderna si compone di uno o più rami (*branch*) non vuoti separati da una pipe **|**. Un **branch** è composto da uno o più pezzi (*piece*) concatenati. Seleziona una corrispondenza per il primo pezzo, seguito da una corrispondenza per il secondo, ecc.
+Un **piece** è una preposizione atomica (**atom**) possibilmente seguita da caratteri speciali quali:
+
+* **\*** - il precedente atomo matcha 0 o più volte
+* **+** - il precedente atomo matcha 1 o più volte
+* **?** - il precedente atomo matcha 0 o solo 1 volta
+
+> Esempio:
+> ![](img/egrepRE.png)
+> **NOTA:** Mentre per il **+** e **\*** il match è multiplo, il **?** matcha una singola volta ma lo fa in più istanze, pertanto il risultato atteso dal **?** e dal **\*** è lo stesso.
+
+* **{n}** - il precedente atomo matcha esattamente n volte
+> Esempio:
+> ![](img/egrep%5B%5D.png)
+
+* **{n,m}** - il precedente atomo matcha al meno n volte a al più m volte
+
+* **{n,}** - il precedente atomo matcha almeno n volte
+
+* **(reg exp)** - matcha l'espressione regolare racchiusa nelle parentesi tonde
+
+* **()** - matcha la stringa vuota
+
+> Esempio:
+> ![](img/egrep().png)
+
+* **.** - matcha qualsiasi carattere
+
+* **^** - matcha la stringa nulla all'inizio di una riga di testo
+
+* **$** - matcha la stringa nulla alla fine di una riga di testo
+
+* **\\** - se seguito da un carattere con meta-significato (come *, +, ecc...), matcha quel carattere come se fosse un carattere normale
+
+Un atomo è rappresentabile anche come espressione tra []. 
+
+* **[agd]** - matcha ognuno dei caratteri presenti all'interno delle [] considerandoli come se fossero a se stanti
+
+* **[^agd]** - matcha ogni altro carattere differente da quelli specificati all'interno delle []
+
+* **[c-f]** - matcha i caratteri compresi nel range specificato all'interno delle []. Significa, quindi, che matcha i caratteri 'c', 'd', 'e' ed 'f'.
+
+> Esempio:
+> ![](img/egrep4.png)
+
 
 
 # Parametri
@@ -635,3 +696,4 @@ I parametri qui sotto elencati sono quelli più utilizzati, per una lista comple
 * **Directory entry**: un file che contiene informazioni su un file o una directory, come ad esempio il nome del file, la data di creazione, la dimensione, ecc.
 
 [def]: img/ls-s.png
+[def2]: £
