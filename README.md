@@ -9,9 +9,9 @@
 * [Comandi Shell](#comandi-shell)
 * [Comandi per scrittura su file](#comandi-per-file)
 * [Filters, Redirection e Pipelines](#filters-redirection-e-pipelines)
+* [Espressioni Regolari](#espressioni-regolari)
 * [Parametri](#parametri)
 * [Vocabolario](#vocabolario)
-* [Espressioni Regolari](#espressioni-regolari)
 
 # Shell
 I sistemi UNIX mettono a disposizione differenti tipi di Shell, elencati di seguito:
