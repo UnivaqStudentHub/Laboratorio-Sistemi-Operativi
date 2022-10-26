@@ -615,6 +615,7 @@ nl [options] [file_name]
 Il comando **grep** o **egrep** (extended grep) cerca nel file di testo una riga di testo che corrisponde ad uno o più patterns passati come parametro
 
 > Esempio:
+> <br>
 > ![](img/egrep1.png)
 
 # Espressioni Regolari
@@ -634,11 +635,13 @@ Un **piece** è una preposizione atomica (**atom**) possibilmente seguita da car
 * **?** - il precedente atomo matcha 0 o solo 1 volta
 
 > Esempio:
+> <br>
 > ![](img/egrepRE.png)
 > **NOTA:** Mentre per il **+** e **\*** il match è multiplo, il **?** matcha una singola volta ma lo fa in più istanze, pertanto il risultato atteso dal **?** e dal **\*** è lo stesso.
 
 * **{n}** - il precedente atomo matcha esattamente n volte
 > Esempio:
+> <br>
 > ![](img/egrep%5B%5D.png)
 
 * **{n,m}** - il precedente atomo matcha al meno n volte a al più m volte
@@ -650,6 +653,7 @@ Un **piece** è una preposizione atomica (**atom**) possibilmente seguita da car
 * **()** - matcha la stringa vuota
 
 > Esempio:
+> <br>
 > ![](img/egrep().png)
 
 * **.** - matcha qualsiasi carattere
@@ -669,6 +673,7 @@ Un atomo è rappresentabile anche come espressione tra [].
 * **[c-f]** - matcha i caratteri compresi nel range specificato all'interno delle []. Significa, quindi, che matcha i caratteri 'c', 'd', 'e' ed 'f'.
 
 > Esempio:
+> <br>
 > ![](img/egrep4.png)
 
 
