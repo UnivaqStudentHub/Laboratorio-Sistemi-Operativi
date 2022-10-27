@@ -208,7 +208,7 @@ Un **piece** è una preposizione atomica (**atom**) possibilmente seguita da car
 * **{n}** - il precedente atomo matcha esattamente n volte
 > Esempio:
 > <br>
-> ![](img/egrep%5B%5D.png)
+> ![](img/egrep2.png)
 
 * **{n,m}** - il precedente atomo matcha al meno n volte a al più m volte
 
@@ -242,7 +242,45 @@ Un atomo è rappresentabile anche come espressione tra [].
 > <br>
 > ![](img/egrep4.png)
 
+## **<span style="color:red">sed</span>**
 
+Si tratta di un comando per cercare e rimpiazzare un'espressione con un'altra. Il formato è il seguente:
+
+> Esempio:
+> ```bash
+> sed s/to search/to replace/g
+> ```
+> **NOTA:** **s** sta per sostituisci e **g** per globalmente, senza **g** il comando sostituisce solo la ***prima istanza*** della riga di testo
+
+* **-e** - se usato prima dell'espressione per rimpiazzare, è utile per combinarne più insieme
+
+> Esempio:
+> ```bash
+> sed -e 's/a/A/' -e 's/b/B/' persone.txt
+> ```
+> Rimpiazza le lettere minuscole a e b con le loro lettere maiuscole
+
+Ovviamente, è possibile utilizzare questo comando in combinazione con le espressioni regolari.
+
+# Pipeline e redirezione
+
+I flussi di dati nella shell si servono di canali di comunicazione. Specificatamente, si parla di:
+
+* **STDIN (0)** - è lo standard input
+
+* **STDOUT (1)** - è lo standard output
+
+* **STDERR (2)** - è lo standard error
+
+Lo standard error viene reindirizzato di default nello standard output:
+
+> Esempio:
+> <br>
+> ![](img/pipeline1.png)
+
+Per rdirezionare manualmente l'input e l'output si utilizzano i seguenti operatori:
+
+* **>** - permette di redirezionare l'output di un programma o di un comando in un file, piuttosto che stamparlo a schermo.
 
 # Parametri
 
