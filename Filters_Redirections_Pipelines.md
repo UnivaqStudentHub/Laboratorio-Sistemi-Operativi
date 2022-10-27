@@ -257,3 +257,6 @@ Lo standard error viene reindirizzato di default nello standard output:
 Per rdirezionare manualmente l'input e l'output si utilizzano i seguenti operatori:
 
 * **>** - permette di redirezionare l'output di un programma o di un comando in un file, piuttosto che stamparlo a schermo.
+
+--------------------
+[Return Home](/README.md)
