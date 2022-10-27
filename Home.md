@@ -7,8 +7,9 @@
 * [Filesystem block](#filesystem-block)
 * [Wildcards](/Wildcards.md)
 * [Comandi Shell](/comandi_shell.md)
-* [Comandi per scrittura su file](/Comandi_files.md)
-* [Filters, Redirection e Pipelines](/Filters_Redirections_Pipelines.md)
+* [Comandi per scrittura su file](/Comandi_files.md))
+* [Filters, Redirection e Pipelines](#filters-redirection-e-pipelines)
+* [Espressioni Regolari](#espressioni-regolari)
 * [Parametri](#parametri)
 * [Vocabolario](#vocabolario)
 
@@ -106,6 +107,15 @@ Per visualizzare la dimensione su **disco** usare il comando [`du`](#du)
 
 
   ![](img/block.png)
+
+
+
+
+
+
+
+
+
 
 
 # Parametri
