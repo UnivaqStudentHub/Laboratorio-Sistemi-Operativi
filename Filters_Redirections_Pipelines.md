@@ -17,14 +17,14 @@ head [options] [file_name]
 ```bash
 head -n [number] [file_name]
 ```
-Il `number` indica il numero di righe che si vogliono visualizzare
+Il `number` indica il numero di **righe** che si vogliono visualizzare
 
 
 ### **`head -c`**
 ```bash
 head -c [number] [file_name]
 ```
-Il `number` indica il numero di bytes che si vogliono visualizzare ( 1 byte = 1 char )
+Il `number` indica il numero di **bytes** che si vogliono visualizzare ( 1 byte = 1 char )
 
 ## **<span style="color:red">tail</span>**
 `tail` è un filtro che permette di visualizzare le ultime righe di un file di testo
@@ -58,6 +58,99 @@ nl [options] [file_name]
 > * Il comando `-w 10` indica che verrà tabulato di 10 <br>
 > * Il comando `-s '. '` indica che verrà inserito un punto e uno spazio tra il numero di riga e il testo
 > ![](img/nl.png)
+
+## **<span style="color:red">wc</span>**
+`wc` è un filtro che permette di contare le righe, le parole e i caratteri di un file di testo
+
+```bash
+wc [options] [path]
+```
+>Esempio:
+>![](img/wc_base.png)
+>L'output di default è così composto: <br>
+> `linee | parole | caratteri | nome del file`
+
+Tipi di `options` possibili:
+* `-c`: visualizza solo il numero di bytes
+* `-m`: visualizza solo il numero di caratteri
+* `-l`: visualizza solo il numero di righe
+* `-w`: visualizza solo il numero di parole
+
+## **<span style="color:red">cut</span>**
+`cut` è un filtro che permette di selezionare parti di una riga di testo separati da un delimitatore
+
+```bash
+cut [options] [file_name]
+```
+
+Prendendo come testo il seguente file:<br>
+![](img/test_originale.png)
+
+Eseguiamo questo comando:
+```bash
+cut —f <selezione "colonne"> -d <separatore> test.txt
+```
+Vediamo cosa succede sostituendo i parametri tra <>:
+![](img/cut_;.png)
+Essendo che nel file di testo il `;` non è presente il comando restituisce tutto il file senza nessuna separazione
+
+<br>
+
+![](img/cut_spazio_1.png)
+Essendo che nel file il testo è separato da `spazi` il comando mi restituisce tutti i caratteri per ogni riga fino al primo spazio
+
+<br>
+
+
+![](img/cut_spazio_1_2.png)
+Essendo che nel file il testo è separato da `spazi` il comando mi restituisce tutti i caratteri per ogni riga fino al secondo spazio
+
+
+## **<span style="color:red">uniq</span>**
+`uniq` è un filtro che permette di rimuovere le righe duplicate di un file di testo
+
+**Attenzione: le righe duplicate devono essere consecutive, cioè non separate da spazi bianchi**
+
+```bash
+uniq [file_name]
+```
+
+## **<span style="color:red">tac</span>**
+
+`tac` è un filtro che permette di visualizzare il contenuto di un file di testo in ordine inverso
+
+```bash
+tac [file_name]
+```
+
+![](img/tac.png)
+
+## **<span style="color:red">diff</span>**
+Con `diff` è possibile confrontare due file di testo e visualizzare le differenze linea per linea
+
+```bash
+diff [options] [file_name_1] [file_name_2] 
+```
+
+![](img/diff.png)
+
+La prima rida deve essere letta nel seguente modo:<br>
+
+```righe del primo file | lettera | righe del secondo file```
+
+La `lettera` può essere:
+* `a`: riga aggiunta
+* `d`: riga eliminata
+* `c`: riga modificata
+
+Inoltre:
+* `<` indica le righe del primo file
+* `>` indica le righe del secondo file
+* `---` è il separatore fra files
+
+>Esempio di lettura della prima riga:<br>
+>`1,7c1,7`<br>
+> il range di righe *1* - *7* del **primo file** è stato modificato e sostituito il rispettivo range *1* - *7* del **secondo file**
 
 ## **<span style="color:red">egrep</span>**
 
