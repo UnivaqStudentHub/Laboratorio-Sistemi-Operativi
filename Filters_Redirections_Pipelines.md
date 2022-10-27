@@ -1,7 +1,14 @@
+* [Introdizione](#filters-redirection-e-pipelines)
+* [Filtri](#filtri)
+* [Pipelines e redirezione](#pipeline-e-redirezione)
+
+
 # Filters, Redirection e Pipelines
 * Il **filtro** è un programma o una subrutine che prende dati in standard input e "scrive" il risultato allo standard output. Parte più importante è che il filtro **NON** modifica il file di input.
 * La **redirection** è un meccanismo che permette di cambiare il flusso di dati in ingresso e in uscita di un programma tramite l'utilizzo di `>` e `<`
 * Le **pipelines** possono anche essere utilizzate insieme ai filtri. Una pipeline è una sequenza di comandi collegati tramite pipe `|` che permette di passare il risultato di un comando come input di un altro comando.
+
+# Filtri
 
 ## **<span style="color:red">head</span>**
 `head` è un filtro che permette di visualizzare le prime righe di un file di testo
@@ -17,14 +24,14 @@ head [options] [file_name]
 ```bash
 head -n [number] [file_name]
 ```
-Il `number` indica il numero di righe che si vogliono visualizzare
+Il `number` indica il numero di **righe** che si vogliono visualizzare
 
 
 ### **`head -c`**
 ```bash
 head -c [number] [file_name]
 ```
-Il `number` indica il numero di bytes che si vogliono visualizzare ( 1 byte = 1 char )
+Il `number` indica il numero di **bytes** che si vogliono visualizzare ( 1 byte = 1 char )
 
 ## **<span style="color:red">tail</span>**
 `tail` è un filtro che permette di visualizzare le ultime righe di un file di testo
@@ -59,71 +66,112 @@ nl [options] [file_name]
 > * Il comando `-s '. '` indica che verrà inserito un punto e uno spazio tra il numero di riga e il testo
 > ![](img/nl.png)
 
+## **<span style="color:red">wc</span>**
+`wc` è un filtro che permette di contare le righe, le parole e i caratteri di un file di testo
+
+```bash
+wc [options] [path]
+```
+>Esempio:
+>![](img/wc_base.png)
+>L'output di default è così composto: <br>
+> `linee | parole | caratteri | nome del file`
+
+Tipi di `options` possibili:
+* `-c`: visualizza solo il numero di bytes
+* `-m`: visualizza solo il numero di caratteri
+* `-l`: visualizza solo il numero di righe
+* `-w`: visualizza solo il numero di parole
+
+## **<span style="color:red">cut</span>**
+`cut` è un filtro che permette di selezionare parti di una riga di testo separati da un delimitatore
+
+```bash
+cut [options] [file_name]
+```
+
+Prendendo come testo il seguente file:<br>
+![](img/test_originale.png)
+
+Eseguiamo questo comando:
+```bash
+cut —f <selezione "colonne"> -d <separatore> test.txt
+```
+Vediamo cosa succede sostituendo i parametri tra <>:
+![](img/cut_;.png)
+Essendo che nel file di testo il `;` non è presente il comando restituisce tutto il file senza nessuna separazione
+
+<br>
+
+![](img/cut_spazio_1.png)
+Essendo che nel file il testo è separato da `spazi` il comando mi restituisce tutti i caratteri per ogni riga fino al primo spazio
+
+<br>
+
+
+![](img/cut_spazio_1_2.png)
+Essendo che nel file il testo è separato da `spazi` il comando mi restituisce tutti i caratteri per ogni riga fino al secondo spazio
+
+
+## **<span style="color:red">uniq</span>**
+`uniq` è un filtro che permette di rimuovere le righe duplicate di un file di testo
+
+**Attenzione: le righe duplicate devono essere consecutive, cioè non separate da spazi bianchi**
+
+```bash
+uniq [file_name]
+```
+
+## **<span style="color:red">tac</span>**
+
+`tac` è un filtro che permette di visualizzare il contenuto di un file di testo in ordine inverso
+
+```bash
+tac [file_name]
+```
+
+![](img/tac.png)
+
+## **<span style="color:red">diff</span>**
+Con `diff` è possibile confrontare due file di testo e visualizzare le differenze linea per linea
+
+```bash
+diff [options] [file_name_1] [file_name_2] 
+```
+
+![](img/diff.png)
+
+La prima rida deve essere letta nel seguente modo:<br>
+
+```righe del primo file | lettera | righe del secondo file```
+
+La `lettera` può essere:
+* `a`: riga aggiunta
+* `d`: riga eliminata
+* `c`: riga modificata
+
+Inoltre:
+* `<` indica le righe del primo file
+* `>` indica le righe del secondo file
+* `---` è il separatore fra files
+
+>Esempio di lettura della prima riga:<br>
+>`1,7c1,7`<br>
+> il range di righe *1* - *7* del **primo file** è stato modificato e sostituito il rispettivo range *1* - *7* del **secondo file**
+
 ## **<span style="color:red">egrep</span>**
 
-Il comando **grep** o **egrep** (extended grep) cerca nel file di testo una riga di testo che corrisponde ad uno o più patterns passati come parametro
+```bash
+egrep [options] [pattern] [file_name]
+```
+
+Il comando **grep** o **egrep** (extended grep) cerca nel file di testo una riga di testo che corrisponde ad uno o più patterns passati come parametro<br>
+**Si usa perlopiù con le [Espressioni Regolari](/Espressioni_regolari.md)**
 
 > Esempio:
 > <br>
 > ![](img/egrep1.png)
 
-# Espressioni Regolari
-
-Similmente alle **wildcards** per i path, le espressioni regolari permettonop di creare dei pattern per accedere e leggere linee di file di testo (Esempio: identificare tutte le stringhe che rappresentano URLs, linee di commento, indirizzi e-mail).
-
-Esistono due tipi di espressioni regolari:
-
-* **Basic Regular Expressions (BRE)**
-* **Extended Regular Expressions (ERE)**
-
-Un'espressione regolare moderna si compone di uno o più rami (*branch*) non vuoti separati da una pipe **|**. Un **branch** è composto da uno o più pezzi (*piece*) concatenati. Seleziona una corrispondenza per il primo pezzo, seguito da una corrispondenza per il secondo, ecc.
-Un **piece** è una preposizione atomica (**atom**) possibilmente seguita da caratteri speciali quali:
-
-* **\*** - il precedente atomo matcha 0 o più volte
-* **+** - il precedente atomo matcha 1 o più volte
-* **?** - il precedente atomo matcha 0 o solo 1 volta
-
-> Esempio:
-> <br>
-> ![](img/egrepRE.png)
-> **NOTA:** Mentre per il **+** e **\*** il match è multiplo, il **?** matcha una singola volta ma lo fa in più istanze, pertanto il risultato atteso dal **?** e dal **\*** è lo stesso.
-
-* **{n}** - il precedente atomo matcha esattamente n volte
-> Esempio:
-> <br>
-> ![](img/egrep2.png)
-
-* **{n,m}** - il precedente atomo matcha al meno n volte a al più m volte
-
-* **{n,}** - il precedente atomo matcha almeno n volte
-
-* **(reg exp)** - matcha l'espressione regolare racchiusa nelle parentesi tonde
-
-* **()** - matcha la stringa vuota
-
-> Esempio:
-> <br>
-> ![](img/egrep().png)
-
-* **.** - matcha qualsiasi carattere
-
-* **^** - matcha la stringa nulla all'inizio di una riga di testo
-
-* **$** - matcha la stringa nulla alla fine di una riga di testo
-
-* **\\** - se seguito da un carattere con meta-significato (come *, +, ecc...), matcha quel carattere come se fosse un carattere normale
-
-Un atomo è rappresentabile anche come espressione tra []. 
-
-* **[agd]** - matcha ognuno dei caratteri presenti all'interno delle [] considerandoli come se fossero a se stanti
-
-* **[^agd]** - matcha ogni altro carattere differente da quelli specificati all'interno delle []
-
-* **[c-f]** - matcha i caratteri compresi nel range specificato all'interno delle []. Significa, quindi, che matcha i caratteri 'c', 'd', 'e' ed 'f'.
-
-> Esempio:
-> <br>
-> ![](img/egrep4.png)
 
 ## **<span style="color:red">sed</span>**
 
@@ -131,7 +179,7 @@ Si tratta di un comando per cercare e rimpiazzare un'espressione con un'altra. I
 
 > Esempio:
 > ```bash
-> sed s/to search/to replace/g
+> sed [command] [file_name]
 > ```
 > **NOTA:** **s** sta per sostituisci e **g** per globalmente, senza **g** il comando sostituisce solo la ***prima istanza*** della riga di testo
 
@@ -164,3 +212,6 @@ Lo standard error viene reindirizzato di default nello standard output:
 Per rdirezionare manualmente l'input e l'output si utilizzano i seguenti operatori:
 
 * **>** - permette di redirezionare l'output di un programma o di un comando in un file, piuttosto che stamparlo a schermo.
+
+--------------------
+[Return Home](/README.md)
