@@ -1,72 +1,7 @@
-* [Introduzione](#filters-redirection-e-pipelines)
-* [Espressioni regolari](#espressioni-regolari)
-* [Comandi](#espressioni-regolari)
-
-
 # Filters, Redirection e Pipelines
 * Il **filtro** è un programma o una subrutine che prende dati in standard input e "scrive" il risultato allo standard output. Parte più importante è che il filtro **NON** modifica il file di input.
 * La **redirection** è un meccanismo che permette di cambiare il flusso di dati in ingresso e in uscita di un programma tramite l'utilizzo di `>` e `<`
 * Le **pipelines** possono anche essere utilizzate insieme ai filtri. Una pipeline è una sequenza di comandi collegati tramite pipe `|` che permette di passare il risultato di un comando come input di un altro comando.
-
-# Espressioni Regolari
-
-Similmente alle **wildcards** per i path, le espressioni regolari permettonop di creare dei pattern per accedere e leggere linee di file di testo (Esempio: identificare tutte le stringhe che rappresentano URLs, linee di commento, indirizzi e-mail). 
-
-Esistono due tipi di espressioni regolari:
-
-* **Basic Regular Expressions (BRE)**
-* **Extended Regular Expressions (ERE)**
-
-Un'espressione regolare moderna si compone di uno o più rami (*branch*) non vuoti separati da una pipe **|**. Un **branch** è composto da uno o più pezzi (*piece*) concatenati. Seleziona una corrispondenza per il primo pezzo, seguito da una corrispondenza per il secondo, ecc.
-Un **piece** è una preposizione atomica (**atom**) possibilmente seguita da caratteri speciali quali:
-
-* **\*** - il precedente atomo matcha 0 o più volte
-* **+** - il precedente atomo matcha 1 o più volte
-* **?** - il precedente atomo matcha 0 o solo 1 volta
-
-> Esempio:
-> <br>
-> ![](img/egrepRE.png)
-> **NOTA:** Mentre per il **+** e **\*** il match è multiplo, il **?** matcha una singola volta ma lo fa in più istanze, pertanto il risultato atteso dal **?** e dal **\*** è lo stesso.
-
-* **{n}** - il precedente atomo matcha esattamente n volte
-> Esempio:
-> <br>
-> ![](img/egrep%5B%5D.png)
-
-* **{n,m}** - il precedente atomo matcha al meno n volte a al più m volte
-
-* **{n,}** - il precedente atomo matcha almeno n volte
-
-* **(reg exp)** - matcha l'espressione regolare racchiusa nelle parentesi tonde
-
-* **()** - matcha la stringa vuota
-
-> Esempio:
-> <br>
-> ![](img/egrep().png)
-
-* **.** - matcha qualsiasi carattere
-
-* **^** - matcha la stringa nulla all'inizio di una riga di testo
-
-* **$** - matcha la stringa nulla alla fine di una riga di testo
-
-* **\\** - se seguito da un carattere con meta-significato (come *, +, ecc...), matcha quel carattere come se fosse un carattere normale
-
-Un atomo è rappresentabile anche come espressione tra []. 
-
-* **[agd]** - matcha ognuno dei caratteri presenti all'interno delle [] considerandoli come se fossero a se stanti
-
-* **[^agd]** - matcha ogni altro carattere differente da quelli specificati all'interno delle []
-
-* **[c-f]** - matcha i caratteri compresi nel range specificato all'interno delle []. Significa, quindi, che matcha i caratteri 'c', 'd', 'e' ed 'f'.
-
-> Esempio:
-> <br>
-> ![](img/egrep4.png)
-
-# Comandi
 
 ## **<span style="color:red">head</span>**
 `head` è un filtro che permette di visualizzare le prime righe di un file di testo
@@ -131,3 +66,101 @@ Il comando **grep** o **egrep** (extended grep) cerca nel file di testo una riga
 > Esempio:
 > <br>
 > ![](img/egrep1.png)
+
+# Espressioni Regolari
+
+Similmente alle **wildcards** per i path, le espressioni regolari permettonop di creare dei pattern per accedere e leggere linee di file di testo (Esempio: identificare tutte le stringhe che rappresentano URLs, linee di commento, indirizzi e-mail).
+
+Esistono due tipi di espressioni regolari:
+
+* **Basic Regular Expressions (BRE)**
+* **Extended Regular Expressions (ERE)**
+
+Un'espressione regolare moderna si compone di uno o più rami (*branch*) non vuoti separati da una pipe **|**. Un **branch** è composto da uno o più pezzi (*piece*) concatenati. Seleziona una corrispondenza per il primo pezzo, seguito da una corrispondenza per il secondo, ecc.
+Un **piece** è una preposizione atomica (**atom**) possibilmente seguita da caratteri speciali quali:
+
+* **\*** - il precedente atomo matcha 0 o più volte
+* **+** - il precedente atomo matcha 1 o più volte
+* **?** - il precedente atomo matcha 0 o solo 1 volta
+
+> Esempio:
+> <br>
+> ![](img/egrepRE.png)
+> **NOTA:** Mentre per il **+** e **\*** il match è multiplo, il **?** matcha una singola volta ma lo fa in più istanze, pertanto il risultato atteso dal **?** e dal **\*** è lo stesso.
+
+* **{n}** - il precedente atomo matcha esattamente n volte
+> Esempio:
+> <br>
+> ![](img/egrep2.png)
+
+* **{n,m}** - il precedente atomo matcha al meno n volte a al più m volte
+
+* **{n,}** - il precedente atomo matcha almeno n volte
+
+* **(reg exp)** - matcha l'espressione regolare racchiusa nelle parentesi tonde
+
+* **()** - matcha la stringa vuota
+
+> Esempio:
+> <br>
+> ![](img/egrep().png)
+
+* **.** - matcha qualsiasi carattere
+
+* **^** - matcha la stringa nulla all'inizio di una riga di testo
+
+* **$** - matcha la stringa nulla alla fine di una riga di testo
+
+* **\\** - se seguito da un carattere con meta-significato (come *, +, ecc...), matcha quel carattere come se fosse un carattere normale
+
+Un atomo è rappresentabile anche come espressione tra []. 
+
+* **[agd]** - matcha ognuno dei caratteri presenti all'interno delle [] considerandoli come se fossero a se stanti
+
+* **[^agd]** - matcha ogni altro carattere differente da quelli specificati all'interno delle []
+
+* **[c-f]** - matcha i caratteri compresi nel range specificato all'interno delle []. Significa, quindi, che matcha i caratteri 'c', 'd', 'e' ed 'f'.
+
+> Esempio:
+> <br>
+> ![](img/egrep4.png)
+
+## **<span style="color:red">sed</span>**
+
+Si tratta di un comando per cercare e rimpiazzare un'espressione con un'altra. Il formato è il seguente:
+
+> Esempio:
+> ```bash
+> sed s/to search/to replace/g
+> ```
+> **NOTA:** **s** sta per sostituisci e **g** per globalmente, senza **g** il comando sostituisce solo la ***prima istanza*** della riga di testo
+
+* **-e** - se usato prima dell'espressione per rimpiazzare, è utile per combinarne più insieme
+
+> Esempio:
+> ```bash
+> sed -e 's/a/A/' -e 's/b/B/' persone.txt
+> ```
+> Rimpiazza le lettere minuscole a e b con le loro lettere maiuscole
+
+Ovviamente, è possibile utilizzare questo comando in combinazione con le espressioni regolari.
+
+# Pipeline e redirezione
+
+I flussi di dati nella shell si servono di canali di comunicazione. Specificatamente, si parla di:
+
+* **STDIN (0)** - è lo standard input
+
+* **STDOUT (1)** - è lo standard output
+
+* **STDERR (2)** - è lo standard error
+
+Lo standard error viene reindirizzato di default nello standard output:
+
+> Esempio:
+> <br>
+> ![](img/pipeline1.png)
+
+Per rdirezionare manualmente l'input e l'output si utilizzano i seguenti operatori:
+
+* **>** - permette di redirezionare l'output di un programma o di un comando in un file, piuttosto che stamparlo a schermo.
