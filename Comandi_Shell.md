@@ -2,7 +2,7 @@
 
 ***Per agevolare la scrittura dei comandi, il tasto Tab spesso può essere utilizzato per autocompletare il comando o il nome del file.***
 ## **<span style="color:red">man</span>**
-Restituisce la documentazione per un determinato comando, si utilizza:
+Apre la documentazione dei comandi di Unix, se accompagnato da un comando, permette di visualizzare la documentazione di quel comando specifico.
 ```bash
 man [options]
 ```
@@ -17,7 +17,7 @@ man -k <keyword>
 ```
 
 ## **<span style="color:red">ps</span>**
-Visualizza i processi in esecuzione con vari gradi di dettaglio a seconda dei parametri specificati nel coman
+Visualizza i processi in esecuzione con vari gradi di dettaglio a seconda dei parametri specificati nel comando
 
 ```bash
 ps [options]
@@ -43,7 +43,7 @@ In seguito vediamo la struttura di output del comando `ls -l`:
 file premission       |    numero di hard links del file o il numero di directory entries contenute  | owner name       |  owner group       |  file size     |     Mese di modifica   |  giorno di modifica      |   anno/ora di modifica |     nome del file o directory o link  
 
 
-Prima della struttura a tabella è presente una riga che inizia con `total` che indica la dimensione totale dei file contenuti nella directory, visualizzata in numero di blocchi ( 512 bytes per blocco) o in bytes.
+Prima che la riga contenente le informazioni della tabella venga visualizzata, viene mostrata una riga che inizia con `total` che indica la dimensione totale dei file contenuti nella directory, visualizzata in numero di blocchi ( 512 bytes per blocco ) o in bytes.
 
 ***All'interno della colonna 1, potrebbero esserci:***
 
@@ -59,7 +59,7 @@ Prima della struttura a tabella è presente una riga che inizia con `total` che 
 
 ***File permissions, colonna 1:***
 
-le file permissions sono rappresentate da 3 gruppi di 3 caratteri, che rappresentano i permessi di lettura, scrittura e esecuzione per l'utente(owner), il gruppo e gli altri utenti.
+i permessi dei files sono rappresentati da 3 gruppi di 3 caratteri, che rappresentano i permessi di lettura, scrittura e esecuzione del file da parte dell'utente (owner), il gruppo ed altri utenti.
 
 * `r` = leggibile
 * `w` = scrivibile
@@ -69,14 +69,14 @@ La terna è così formata:
 
     owner | group | others |
 
-Per consultare il comando per modificare i permessi di un file, si può consultare il comando [chmod](#chmod)
+Il comando `chmod` permette di modificare i permessi di un file. Per ulteriori informazioni su questo comando, potete premere su: [chmod](#chmod) 
 
 <br>
 
  ### **`ls -a`**<br>
 Permette di ottenere l'elenco di tutti i file presenti all'interno della directory in cui viene eseguito, compresi quelli nascosti, normalmente non visibili. (presentano un **"."** prima del nome del file stesso) 
 
-Gli argomenti possono essere combinati per ottenere una visualizzazione completa:
+I parametri finora presentati possono essere combinati per ottenere una visualizzazione completa:
 
 ![](img/ls-la.png)
 

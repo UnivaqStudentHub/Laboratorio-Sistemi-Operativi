@@ -49,7 +49,6 @@ Le opzioni sono le stesse di [head](#head--n), unica cosa è che i bytes e i car
 ```bash
 sort [options] [file_name]
 ```
-
 ## **<span style="color:red">nl</span>**
 `nl` è un filtro che permette di numerare le righe di un file di testo
 
@@ -171,7 +170,6 @@ Il comando **grep** o **egrep** (extended grep) cerca nel file di testo una riga
 > Esempio:
 > <br>
 > ![](img/egrep1.png)
-
 
 
 ## **<span style="color:red">sed</span>**
