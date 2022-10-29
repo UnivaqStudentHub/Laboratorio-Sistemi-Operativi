@@ -86,7 +86,9 @@ I parametri finora presentati possono essere combinati per ottenere una visualiz
 <br>
 
 ### **`ls -s`**
-Rappresenta il numero di blocchi occupati dai file (*prima colonna*), che poi devono essere moltiplicati per la dimensione del blocco per ottenere la dimensione in bytes
+Rappresenta il numero di blocchi occupati dai file (*prima colonna*).
+
+Il numero di blocchi occupati dal file, moltiplicato per la dimensione del singolo blocco, ci permette di ottenere la dimensione in bytes di un file.
 
 **Vengono presi in considerezione solo i file, non le directory**
 >Esempio:
@@ -101,35 +103,41 @@ Con l'argomento `-t` è possibile anche ordinarli in base all'ultima modifica ef
 
 
 ## **<span style="color:red">chmod</span>**
-Modifica i permessi di un file o di una directory
+Permette di modificare i permessi di un file o di una directory
 
 ```bash
 chmod [permissions] [file_name]
 ```
 
-I permessi possono essere modificati per:
+I permessi sono attribuiti a:
 * user ( owner ) : `u`
 * group : `g`
 * others : `o`
-* all : `a`
+* all : `a` 
 
-I permessi possono essere:
-* granted : `+`
+e ovviamente possono essere modificati.
+
+I permessi possono essere inoltre:
+* granted  : `+`
 * revoked : `-`
 
 >Esempio:
 >```bash
 >chmod u-w pippo.txt
 >```
-> In questo caso revoco il permesso di scrittura all'utente owner del file `pippo.txt`
+> In questo caso revochiamo il permesso di scrittura allo user (owner) del file `pippo.txt`
 
 >Esempio:
 >```bash
 >chmod ug+wx pippo.txt
 >```
-> in questo caso aggiungo allo user e aL gruppo il permesso di scrittura e di esecuzione nel file `pippo.txt`
+> In questo caso stiamo aggiungendo allo user e al gruppo il permesso di scrittura e di esecuzione del file `pippo.txt`
 
-*Molte volte si utilizzano dei numeri invece delle lettere, vediamo come funzionano:*
+*Molto spesso viene adottata un'altra forma del comando chmod, più breve e concisa:*
+
+```bash
+chmod [n1][n2][n3] [file_name]
+```
 
 | Octal | Binary |
 |-------|--------|
@@ -147,15 +155,15 @@ Nel binario ogni bit corrisponde ad un permesso, in questo modo:`r | w | x`
 
 La combinazione di 3 numeri ottali corrisponde ai permessi per un utente, un gruppo o tutti gli altri utenti: `u | g | o`
 
-Quindi alla fine si ottine un numero di 3 cifre, che se vengono sostituite con il binario corrispondente avremo: `rwx | rwx | rwx`
+Quindi alla fine otterremo un numero di 3 cifre che, se sostituite con il binario corrispondente ci porteranno ad avere: `rwx | rwx | rwx`
 
-**Naturalmente `1` corrisponde a `+` e `0` a `-`**
+**Naturalmente `1` corrisponde a `+` (permesso aggiunto al file) e `0` a `-` (permesso revocato al file)**
 
 >Esempio:
 >```bash
 >chmod 777 pippo.txt
 >```
-> in questo caso aggiungo all'utente, al gruppo e a tutti gli altri il permesso di scrittura, lettura ed esecuzione di `pippo.txt`
+> In questo caso stiamo aggiungendo all'utente, al gruppo e a tutti gli altri il permesso di scrittura, lettura ed esecuzione di `pippo.txt`
 
 ### Modificare i file ACLs
 
@@ -163,7 +171,7 @@ Quindi alla fine si ottine un numero di 3 cifre, che se vengono sostituite con i
 >```bash
 > chmod +a "user:user1 allow read,write,append" file.txt
 >```
-> ///
+
 
 
 ## **<span style="color:red">xattr</span>**
