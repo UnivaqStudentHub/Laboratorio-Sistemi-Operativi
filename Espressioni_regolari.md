@@ -7,7 +7,7 @@ Esistono due tipi di espressioni regolari:
 * **Basic Regular Expressions (BRE)**
 * **Extended Regular Expressions (ERE)**
 
-Un'espressione regolare moderna si compone di uno o più rami (*branch*) non vuoti separati da una pipe **|**. Un **branch** è composto da uno o più pezzi (*piece*) concatenati. Seleziona una corrispondenza per il primo pezzo, seguito da una corrispondenza per il secondo, ecc.
+Un'espressione regolare moderna si compone di uno o più rami (*branch*) non vuoti separati da una pipe **`|`**. Un **branch** è composto da uno o più pezzi (*piece*) concatenati. Seleziona una corrispondenza per il primo pezzo, seguito da una corrispondenza per il secondo, ecc.
 Un **piece** è una preposizione atomica (**atom**) possibilmente seguita da caratteri speciali quali:
 
 * **`<atomo>`\*** - il precedente atomo matcha 0 o più volte
