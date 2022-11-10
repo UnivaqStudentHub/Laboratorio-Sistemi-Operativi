@@ -1,4 +1,4 @@
-* [Introdizione](#filters-redirection-e-pipelines)
+* [Introduzione](#filters-redirection-e-pipelines)
 * [Filtri](#filtri)
 * [Pipelines e redirezione](#pipeline-e-redirezione)
 

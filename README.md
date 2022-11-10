@@ -11,6 +11,7 @@
 * [Filters, Redirection e Pipelines](/Filters_Redirections_Pipelines.md)
 * [Parametri](#parametri)
 * [Vocabolario](#vocabolario)
+* [Riassunto comandi](/Comandi.md)
 
 # Shell
 I sistemi UNIX mettono a disposizione differenti tipi di Shell, elencati di seguito:
