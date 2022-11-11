@@ -17,6 +17,7 @@ Un **piece** è una preposizione atomica (**atom**) possibilmente seguita da car
 > Esempio:
 > <br>
 > ![](img/egrepRE.png)
+><br>
 > **NOTA:** Mentre per il **+** e **\*** il match è multiplo, il **?** matcha una singola volta ma lo fa in più istanze, pertanto il risultato atteso dal **?** e dal **\*** è lo stesso.
 
 * **`<atomo>`{n}** - il precedente atomo matcha esattamente n volte

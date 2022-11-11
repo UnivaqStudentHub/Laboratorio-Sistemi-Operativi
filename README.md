@@ -6,6 +6,7 @@
 * [Working directory](#working-directory)
 * [Filesystem block](#filesystem-block)
 * [Wildcards](/Wildcards.md)
+* [Espressioni regolari](/Espressioni_regolari.md)
 * [Comandi Shell](/comandi_shell.md)
 * [Comandi per scrittura su file](/Comandi_files.md)
 * [Filters, Redirection e Pipelines](/Filters_Redirections_Pipelines.md)
