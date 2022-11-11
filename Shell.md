@@ -251,6 +251,13 @@ do
     codice
 done
 ```
+Ex:
+```bash
+for file in ./$folder/*
+do
+    echo $file
+done
+```
 
 # break & continue
 * **break** interrompe il ciclo
@@ -269,6 +276,7 @@ do
     codice
 done
 ```
+Ex:
 ```bash
 select name in "John" "Paul" "George" "Ringo"
 do
@@ -285,7 +293,8 @@ function nome_funzione {
 }
 ```
 Non potendo avere valore di ritorno, si può o usare una variabile globale, oppure far stampare il risultato della funzione, che verrà poi hiamata tramite `$()`.
-I parametri della funzione sono salvati in `$1`, `$2`, `$3`...
+I parametri della funzione sono salvati in `$1`, `$2`, `$3` (se eseguito tramite `$()`)
+Ex:
 ```bash
 function somma {
     echo $(expr $1 + $2)
@@ -305,6 +314,7 @@ Esegue il codice passato come parametro
 ```bash
 eval codice
 ```
+Ex:
 ```bash
 a="cat file.txt"
 eval $a
@@ -320,6 +330,7 @@ Il contenuto vero e proprio delle variabili rimane sempre una stringa, ma alcuni
 ```bash
 declare [parametro] variabile
 ```
+Ex:
 ```bash
 declare -a array
 declare -i intero

@@ -171,6 +171,14 @@ Ex: `xattr -l file.txt`
 Ex: `xattr -p user.name file.txt`
 Ex: `xattr -w user.name "John Doe" file.txt`
 Ex: `xattr -d user.name file.txt`
+
+# basename 
+```bash
+basename [path]
+```
+Ritorna il nome del file o directory specificato rimuovendo il percorso assoluto
+Ex: `basename /some/path/file.txt` -> `file.txt`
+
 # chmod
 ```bash
 chmod [modes] [file]
@@ -256,13 +264,24 @@ Ex: `diff file1.txt file2.txt`
 egrep [options] [pattern] [file]
 ```
 Permette di cercare un pattern in un file, è una versione estesa di grep che supporta espressioni regolari. Trova e stampa le righe che contengono il pattern. Il pattern può essere una stringa o un'espressione regolare.
+* **-n**: stampa il numero di righe che hanno match
 Ex: `egrep "pattern" file.txt`
 
 # sed
 ```bash
 sed [options] [pattern] [file]
 ```
-Permette di modificare il contenuto di un file, sostituendo o eliminando parti di testo. Il pattern può essere una stringa o un'espressione regolare.
+
+Permette di sostituire le occorrenze di un input, sostituendo o eliminando parti di testo. Il pattern è un espressione regolare ed è della forma:
+```
+s/[regex]/[rimpiazzamento]/[flag]
+```
+dove i flag sono: 
+* numero: sostituisce solo la n-esima occorrenza nella riga, es: s/abc/ABC/2 (sostituisce solo la seconda occorrenza di abc)
+* g: sostituisce tutte le occorrenze, es: s/abc/ABC/g
+* p: stampa le righe e le righe che hanno sostituzioni (uno dopo l'altro)
+
+
 * **-e**: concatena più comandi da eseguire
 Ex: `sed "s/pattern/replacement/" file.txt`
 # ps
