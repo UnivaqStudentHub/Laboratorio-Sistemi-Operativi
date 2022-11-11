@@ -183,11 +183,6 @@ b="Hello World"
 echo ${#b} //11
 ```
 
-# Condizioni
-Le condizioni sono espressioni che possono essere valutate come true o false.
-![Condizioni 1](/img/conditions_1.png)
-![Condizioni 2](/img/conditions_2.png)
-![Condizioni 3](/img/conditions_3.png)
 
 
 # test and exit status
@@ -199,6 +194,16 @@ un altro modo per eseguire il test è usare l'operatore `[` e `]`
 ```bash
 [ condizione ]
 ```
+
+# Condizioni
+Le condizioni sono espressioni che possono essere valutate come true o false.
+Queste sono quelle standard di bash:
+![Condizioni 1](/img/conditions_1.png)
+![Condizioni 2](/img/conditions_2.png)
+![Condizioni 3](/img/conditions_3.png)
+Ma esistono anche altre condizioni più "moderne", per poter essere usate bisogna racchiuderle in `[[ condizione ]]` anzichè `[ condizione ]`
+![Condizioni 3](/img/conditions_4.png)
+
 # if
 ```bash
 if condizione
