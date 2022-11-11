@@ -1,6 +1,6 @@
 # INDICE
 
-* [Shell](#shell)
+* [Shell in generale](#shell)
 * [Da dove prende i comandi il terminale?](#da-dove-prende-i-comandi-il-terminale)
 * [UNIX file system](#unix-file-system)
 * [Working directory](#working-directory)

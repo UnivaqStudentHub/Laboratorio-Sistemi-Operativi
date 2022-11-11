@@ -211,6 +211,11 @@ Lo standard error viene reindirizzato di default nello standard output:
 Per rdirezionare manualmente l'input e l'output si utilizzano i seguenti operatori:
 
 * **>** - permette di redirezionare l'output di un programma o di un comando in un file, piuttosto che stamparlo a schermo.
+    * E' possibile creare anche più redirection consecuitive
+
+## **<span style="color:red">[n]<&word</span>**
+Viene utilizzato per duplicare l'input dei descrittori file 
+
 
 --------------------
 [Return Home](/README.md)
