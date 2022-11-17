@@ -209,9 +209,9 @@ Possono anche essere specificata a quale classe di utente si riferiscono i perme
 * **g**: gruppo
 * **o**: altri
 * **a**: tutti
-
 Può anche essere usata la notazione octal, dove i primi 3 bit indicano i permessi per l'utente, i secondi 3 per il gruppo e gli ultimi 3 per gli altri, in ordine rwx. Es: 777 = rwxrwxrwx, 644 = rw-r--r--
-
+Opzioni:
+* **-N**: Rimuove ACL del file
 Ex: `chmod u+x file.txt`
 Ex: `chmod a-x file.txt`
 # head & tail
