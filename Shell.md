@@ -343,3 +343,42 @@ declare -r read_only
 array[0]=1
 intero=5/2 //senza bisogno di expr o let!
 ```
+
+
+
+# Esempi
+
+Prende tutti i file nella directory che iniziano con "a" o "b" e finiscono con "?", conta all'interno del file quante volte è presente la parola "test", se è maggiore di 2, stampa quanti ne ha trovati, sennò "too few tests"
+```bash
+for file in ./[ab]*\?.txt; do
+        count=$(egrep -c test $file)
+        if [ $count -gt 2 ]
+        then
+                echo "$file: $count"
+        else
+                echo "$file: too few tests"
+        fi
+done
+```
+
+Prende il primo parametro passato al comando e calcola il numero di fibonacci su di esso
+```bash
+function myfunction {
+    if [ $1 -gt 1 ]; then
+        ((a=$1-1))
+        ((b=$1-2))
+        temp1=$(myfunction $a)
+        temp2=$(myfunction $b)
+        ((res=temp1+temp2))
+    else
+        if [ $1 -eq 1 ]; then
+            res=1
+        else
+            res=0
+        fi
+    fi
+    echo $res
+}
+res=$(myfunction $1)
+echo $res
+```
