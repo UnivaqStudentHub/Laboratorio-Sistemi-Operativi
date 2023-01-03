@@ -1,18 +1,12 @@
 # INDICE
 
 * [Shell in generale](#shell)
-* [Da dove prende i comandi il terminale?](#da-dove-prende-i-comandi-il-terminale)
-* [UNIX file system](#unix-file-system)
-* [Working directory](#working-directory)
-* [Filesystem block](#filesystem-block)
 * [Wildcards](/Wildcards.md)
 * [Espressioni regolari](/Espressioni_regolari.md)
 * [Comandi Shell](/comandi_shell.md)
 * [Comandi per scrittura su file](/Comandi_files.md)
 * [Filters, Redirection e Pipelines](/Filters_Redirections_Pipelines.md)
 * [Shell in generale e bash](/Shell.md)
-* [Parametri](#parametri)
-* [Vocabolario](#vocabolario)
 * [Riassunto comandi](/Comandi.md)
 
 # Shell
@@ -132,6 +126,3 @@ I parametri qui sotto elencati sono quelli più utilizzati, per una lista comple
 * **Path**: una stringa che identifica la posizione di una specifica directory o file.
 
 * **Directory entry**: un file che contiene informazioni su un file o una directory, come ad esempio il nome del file, la data di creazione, la dimensione, ecc.
-
-[def]: img/ls-s.png
-[def2]: £
