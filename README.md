@@ -3,7 +3,7 @@
 * [Shell in generale](#shell)
 * [Wildcards](/Wildcards.md)
 * [Espressioni regolari](/Espressioni_regolari.md)
-* [Comandi Shell](/comandi_shell.md)
+* [Comandi Shell](/Comandi_Shell.md)
 * [Comandi per scrittura su file](/Comandi_files.md)
 * [Filters, Redirection e Pipelines](/Filters_Redirections_Pipelines.md)
 * [Shell in generale e bash](/Shell.md)
