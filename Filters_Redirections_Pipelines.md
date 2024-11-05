@@ -73,8 +73,10 @@ nl [options] [file_name]
 wc [options] [path]
 ```
 >Esempio:
+><br></br>
 >![](img/wc_base.png)
->L'output di default è così composto: <br>
+><br></br>
+>L'output di default è così composto: <br></br>
 > `linee | parole | caratteri | nome del file`
 
 Tipi di `options` possibili:
