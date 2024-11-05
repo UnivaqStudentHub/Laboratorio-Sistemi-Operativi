@@ -99,18 +99,19 @@ cut —f <selezione colonne> -d <separatore> test.txt
 ```
 Vediamo cosa succede sostituendo i parametri tra <>:
 ![](img/cut_;.png)
+<br></br>
 Dato che nel file di testo il `;` non è presente, il comando restituisce tutto il file senza nessuna separazione
 
-<br>
+<br></br>
 
 ![](img/cut_spazio_1.png)
 Dato che nel file il testo è separato da `spazi`, il comando restituisce tutti i caratteri per ogni riga fino al primo spazio
 
-<br>
+<br></br>
 
 
 ![](img/cut_spazio_1_2.png)
-Dat che nel file il testo è separato da `spazi`, il comando restituisce tutti i caratteri per ogni riga fino al secondo spazio
+Dato che nel file il testo è separato da `spazi`, il comando restituisce tutti i caratteri per ogni riga fino al secondo spazio
 
 
 ## **<span style="color:red">uniq</span>**
@@ -155,8 +156,8 @@ Inoltre:
 * `>` indica le righe del secondo file
 * `---` è il separatore fra files
 
->Esempio di lettura della prima riga:<br>
->`1,7c1,7`<br>
+>Esempio di lettura della prima riga:<br></br>
+>`1,7c1,7`<br></br>
 > il range di righe *1* - *7* del **primo file** va sostituito con il rispettivo range *1* - *7* del **secondo file** per rendere i due files uguali
 
 **Ricordiamo che i filtri non modificano i files in input!**
