@@ -6,7 +6,7 @@
 * [Comandi Shell](/Comandi_Shell.md)
 * [Comandi per scrittura su file](/Comandi_files.md)
 * [Filters, Redirection e Pipelines](/Filters_Redirections_Pipelines.md)
-* [Shell in generale e bash](/Shell.md)
+* [Shell in generale e bash](/Bash_scripting.md)
 * [Riassunto comandi](/Comandi.md)
 
 # Shell
