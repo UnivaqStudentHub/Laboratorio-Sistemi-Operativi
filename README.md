@@ -1,13 +1,25 @@
-# INDICE
+# Introduzione
 
-* [Shell in generale](#shell)
+Il corso di Laboratorio di Sistemi Operativi è suddiviso in due parti.
+
+# Indice
+
+## Command Line and Bash Scripting
+
+* [Introduzione](#shell)
 * [Wildcards](/Wildcards.md)
 * [Espressioni regolari](/Espressioni_regolari.md)
 * [Comandi Shell](/Comandi_Shell.md)
 * [Comandi per scrittura su file](/Comandi_files.md)
 * [Filters, Redirection e Pipelines](/Filters_Redirections_Pipelines.md)
-* [Shell in generale e bash](/Bash_scripting.md)
+* [Shell in generale e bash](/Shell.md)
 * [Riassunto comandi](/Comandi.md)
+
+## Programming in the Unix Environment
+
+* Introduzione
+* Compilatore C e fasi di compilazione
+* Makefile
 
 # Shell
 I sistemi UNIX mettono a disposizione differenti tipi di Shell, elencati di seguito:
