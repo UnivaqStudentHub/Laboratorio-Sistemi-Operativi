@@ -25,7 +25,7 @@ Le variabili speciali sono variabili che vengono settate automaticamente dal sis
 * **$0** - Nome del programma
 * **$1 - $9** - Argomenti passati al programma
 * **$#** - Numero di argomenti passati in input al programma
-* **$\* e \$@** - Tutti gli argomenti passati al programma
+* **\$\* \(anche $@\)** - Tutti gli argomenti passati al programma
 * **$?** - Codice di ritorno dell'ultimo processo eseguito
 * **$$** - PID del processo corrente
 * **$USER** - Username dell'utente che sta eseguendo il programma
