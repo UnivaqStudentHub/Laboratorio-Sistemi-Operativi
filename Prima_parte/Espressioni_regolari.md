@@ -16,14 +16,14 @@ Un **piece** è una preposizione atomica (**atom**) possibilmente seguita da car
 
 > Esempio:
 > <br>
-> ![](img/egrepRE.png)
+> ![](/img/egrepRE.png)
 ><br>
 > **NOTA:** Mentre per il **+** e **\*** il match è multiplo, il **?** matcha una singola volta ma lo fa in più istanze, pertanto il risultato atteso dal **?** e dal **\*** è lo stesso.
 
 * **`<atomo>`{n}** - il precedente atomo matcha esattamente n volte
 > Esempio:
 > <br>
-> ![](img/egrep2.png)
+> ![](/img/egrep2.png)
 
 * **`<atomo>`{n,m}** - il precedente atomo matcha al meno *n* volte a al più *m* volte
 
@@ -35,7 +35,7 @@ Un **piece** è una preposizione atomica (**atom**) possibilmente seguita da car
 
 > Esempio:
 > <br>
-> ![](img/egrep().png)
+> ![](/img/egrep().png)
 
 * **.** - matcha qualsiasi carattere
 
@@ -55,7 +55,7 @@ Un atomo è rappresentabile anche come espressione tra [].
 
 > Esempio:
 > <br>
-> ![](img/egrep4.png)
+> ![](/img/egrep4.png)
 
 --------------------
 [Return Home](/README.md)
