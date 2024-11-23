@@ -1,3 +1,6 @@
+# Disclaimer
+Attenzione, questo materiale potrebbe non essere esente da errori, per cui non è consigliato come fonte primaria di studio, in quanto rielaborazione delle slides del docente del corso e di materiale trovato in rete.
+
 # Introduzione
 
 Il corso di Laboratorio di Sistemi Operativi è suddiviso in due parti.
@@ -20,3 +23,5 @@ Il corso di Laboratorio di Sistemi Operativi è suddiviso in due parti.
 * Introduzione
 * Compilatore C e fasi di compilazione
 * Makefile
+
+****************************************
