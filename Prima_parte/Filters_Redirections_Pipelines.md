@@ -142,7 +142,7 @@ Con `diff` è possibile confrontare due file di testo e visualizzare le differen
 diff [options] [file_name_1] [file_name_2] 
 ```
 
-![]\(/img/diff.png)
+![](/img/diff.png)
 
 La prima riga va letta in questo modo:<br>
 
@@ -175,7 +175,7 @@ Il comando **grep** o **egrep** (extended grep) cerca nel file di testo una riga
 
 > Esempio:
 > <br>
-> ![]\(/img/egrep1.png)
+> ![](/img/egrep1.png)
 
 
 ## **<span style="color:red">sed</span>**
@@ -244,7 +244,7 @@ Lo standard error viene rediretto di default nello standard output:
 
 > Esempio:
 > <br>
-> ![]\(/img/pipeline1.png)
+> ![](/img/pipeline1.png)
 
 Per redirezionare manualmente l'input e l'output si utilizzano i seguenti operatori:
 
