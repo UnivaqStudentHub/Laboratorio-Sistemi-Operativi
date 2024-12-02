@@ -20,8 +20,6 @@ Il corso di Laboratorio di Sistemi Operativi è suddiviso in due parti.
 
 ## Programming in the Unix Environment
 
-* Introduzione
-* Compilatore C e fasi di compilazione
-* Makefile
+* [Utility make](/Seconda_parte/Utility_make.md)
 
 ****************************************
