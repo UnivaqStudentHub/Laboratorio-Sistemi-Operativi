@@ -254,7 +254,7 @@ Consideriamo un nuovo esempio che risolve questa mancanza.
 >
 > ![](/img/directory_structure_example_makefile.jpg)
 > 
-> Prendiamo in considerazione il seguente sorgente C, chiamato `ex2.c`:
+> Prendiamo in considerazione il sorgente C chiamato `ex2.c`:
 > ```C
 > // Importiamo l'header file "function.h" contenuto nella cartella "include"
 > #include "include/function.h"
