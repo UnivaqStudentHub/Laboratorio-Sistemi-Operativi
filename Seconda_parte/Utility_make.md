@@ -2,7 +2,6 @@
 In questa sezione introduciamo **make**, un tool per la generazione di eseguibili e altri files non sorgente di un programma, partendo dai sorgenti del programma stesso.
 
 Sfrutteremo questa utility per automatizzare la compilazione dei sorgenti C.
-
 # Make vs Bash scripting
 Per quanto l'automatizzazione della compilazione dei sorgenti C sia possibile anche attraverso l'utilizzo di script bash, ricompilare ogni volta tutti i sorgenti è molto dispendioso in termini di risorse. 
 
@@ -58,6 +57,8 @@ make: 'ex0.exe' is up to date.
 ```
 Altrimenti sul terminale verrebbero riportati i comandi eseguiti insieme ad eventuali comandi shell indicati nella regola.
 
+<br></br>
+
 ## Albero delle dipendenze
 Dato che **make** analizza le regole in modo top-down, quindi è buona prassi riportare le regole all'interno del makefile in ordine decrescente di dipendenza, 
 partendo prima dalla regola che crea il file finale e poi specificando tutte le regole che portano alla creazione dei files richiesti per la sua creazione.
@@ -84,6 +85,8 @@ L'albero delle dipendenze dello scorso esempio sarà quindi:
 
 >![](/img/dependency_tree.jpg)
 
+<br></br>
+
 ## Componenti del makefile
 Abbiamo già introdotto alcuni dei componenti del makefile, tra cui:
 - Regole
@@ -95,6 +98,8 @@ Introduciamo ora ulteriori componenti e ne approfondiamo alcuni:
 - [Shell lines](#shell-lines)
 - [Macros](#macros)
 - [Inference rules](#inference-rules)
+
+<br></br>
 
 ### Commenti
 È possibile inserire commenti a singola riga all'interno del makefile, la sintassi è la seguente: `#<text>`
@@ -108,6 +113,8 @@ Consideriamo il seguente
 > # Fine regola
 >```
 > È possibile inserire commenti anche sulla dependency line.
+
+<br></br>
 
 ### Shell lines
 Fino ad ora abbiamo visto regole con una sola **shell line**, ma è possibile inserirne di più.
@@ -136,6 +143,8 @@ Consideriamo un
 > Ovviamente su sistemi Windows bisogna inserire l'estensione `.exe`.
 >
 > Abbiamo omesso la regola di generazione del file oggetto in quanto **make** la esegue implicitamente (provate voi stessi sulla vostra macchina).
+
+<br></br>
 
 ### Macros
 Specificare una **macro** significa inserire un **alias** nel makefile.
@@ -183,6 +192,8 @@ Consideriamo un
 >```
 > Tale dichiarazione sovrascriverà quella definita nel makefile dell'esempio precedente.
 
+<br></br>
+
 ### Inference rules
 In progetti di vaste dimensioni si cerca di generalizzare il più possibile il **Makefile**, in modo tale da renderlo il più conciso possibile.
 
@@ -227,3 +238,74 @@ Vediamo un altro
 Questi sono soltanto esempi di base, tra poco affronteremo anche esempi più dettagliati e analizzeremo che cosa viene stampato sul terminale ogni volta che eseguiamo l'utility make.
 
 Intanto si pensi al makefile del kernel di un sistema operativo. Per quanto esso possa essere generico, non sarà praticamente mai possibile sfruttare una sola regola per la compilazione dell'intero kernel: non solo perché **make** ne potrebbe introdurre di implicite, ma anche perché i files dipenderanno da gruppi di files possibilmente distinti.
+
+# Esempio
+In precedenza abbiamo studiato un esempio ([questo qui](#macros)), dove una modifica all'header file non causava la ricompilazione dei sorgenti C. 
+Questo problema è risolvibile inserendo l'header file come dipendenza dei sorgenti C che lo includono.
+
+Consideriamo un nuovo esempio che risolve questa problematica.
+
+> Esempio
+>
+> Prima di cominciare date un'occhiata alla working directory:
+>
+> ![](/img/directory_structure_example_makefile.jpg)
+> 
+> Prendiamo in considerazione il seguente sorgente C, chiamato `ex2.c`:
+> ```C
+> // Importiamo l'header file "function.h" contenuto nella cartella "include"
+> #include "include/function.h"
+> 
+> int main(void) {
+>   myFunction();
+>   return(0);
+>}
+>
+> ```
+> La funzione `myFunction()` è stata dichiarata all'interno dell'header file `function.h`, che riportiamo di seguito.
+> ```C
+> void myFunction(void);
+> ```
+> come avrete già visto, tale file si trova nella sottodirectory `include`.
+> 
+> Infine consideriamo un'implementazione di tale funzione, realizzata nel file `functionImplementation.c`.
+> ```C
+> #include <stdio.h>
+> #include "include/function.h"
+>
+> void myFunction(void) {
+>   printf("This is the function implementation of the function.h file \n");
+>   return;   
+>}
+> ```
+> Analizziamo ora un Makefile adatto per la nostra situazione (vi consigliamo di fermarvi un attimo e leggerlo con calma):
+> ```make
+> COMPILER = gcc
+> # Option to do only preprocess, compile and assemble
+> OPT_C = -c
+> # Specifying output name
+> OPT_O = -o
+> # Path of the "include" folder
+> INCL_PATH = include/
+> INCL = -I $(INCL_PATH)
+> HEADER_FILE = function.h
+> FILE_NAME = ex2
+> FUNC_IMPL_NAME = functionImplementation
+>
+> $(FILE_NAME).exe: $(FILE_NAME).o $(FUNC_IMPL_NAME).o
+>     $(COMPILER) $(INCL) $(FILE_NAME).o $(FUNC_IMPL_NAME).o $(OPT_O) $@
+>
+> $(FUNC_IMPL_NAME).o: $(FUNC_IMPL_NAME).c $(INCL_PATH)$(HEADER_FILE)
+>     $(COMPILER) $(OPT_C) $(INCL) $(FUNC_IMPL_NAME).c $(OPT_O) $@
+> ```
+> La prima regola definisce semplicemente le dipendenze e la shell line per la realizzazione dell'eseguibile finale.
+>
+> La seconda regola invece è specifica per la generazione del file oggetto dell'implementazione della funzione contenuta nell'header file. Introduciamo di fatto una dipendenza tra quest'ultimo e il file target, come voluto fin dall'inizio.
+>
+> Vediamo adesso la situazione nel terminale:
+>
+> ![](/img/makefile_custom_example.jpg)
+>
+> Si noti come l'utility make abbia esplicitato automaticamente la regola per la creazione del file oggetto del sorgente ex2.c.
+>
+> Ricordiamo inoltre che l'utility make stampa su STDOUT (di default) tutte le shell lines eseguite. È un ottimo indizio per capire se c'è qualche problema nella definizione di una regola.
