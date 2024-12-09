@@ -243,9 +243,10 @@ Intanto si pensi al makefile del kernel di un sistema operativo. Per quanto esso
 
 # Esempio
 In precedenza abbiamo studiato un esempio ([questo qui](#macros)), dove una modifica all'header file non causava la ricompilazione dei sorgenti C. 
-Questo problema è risolvibile inserendo l'header file come dipendenza dei sorgenti C che lo includono.
+Questo problema è risolvibile inserendo l'header file come dipendenza dei sorgenti C che lo implementano.
 
 Consideriamo un nuovo esempio che risolve questa problematica.
+
 
 > Esempio
 >
