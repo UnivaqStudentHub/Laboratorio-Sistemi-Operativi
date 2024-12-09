@@ -25,6 +25,8 @@ Dove la prima riga viene detta **dependency line**, mentre la seconda: **shell l
 
 Vedremo tra qualche paragrafo come sia possibile specificare più **shell lines**, al momento vi basti sapere che per inserirne una bisogna inserire una tabulazione a inizio riga (come potete vedere dalla struttura in alto).
 
+<br></br>
+
 ## Regole del makefile
 Definendo una regola si crea una dipendenza tra i target files e i prerequisiti.
 
