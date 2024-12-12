@@ -100,6 +100,7 @@ Introduciamo ora ulteriori componenti e ne approfondiamo alcuni:
 - [Shell lines](#shell-lines)
 - [Macros](#macros)
 - [Inference rules](#inference-rules)
+- [Phony targets](#phony-targets)
 
 <br></br>
 
@@ -241,6 +242,40 @@ Questi sono soltanto esempi di base, tra poco affronteremo anche esempi più det
 
 Intanto si pensi al makefile del kernel di un sistema operativo. Per quanto esso possa essere generico, non sarà praticamente mai possibile sfruttare una sola regola per la compilazione dell'intero kernel: non solo perché **make** ne potrebbe introdurre di implicite, ma anche perché i files dipenderanno da gruppi di files possibilmente distinti.
 
+<br></br>
+
+## Phony targets
+Sulla riga dell'automatizzazione della compilazione di sorgenti C, resta soltanto da realizzare una regola che ci consenta di eliminare tutti quei files temporanei generati durante il processo di compilazione.
+
+Potremmo pensare di realizzare tale regola in questo modo:
+
+```make
+ clean: # no prerequisites
+     rm -rf *.o *.bak *.swp
+
+ # Eliminiamo tutti i files .o, .bak e .swp nella cartella corrente
+ # I files .bak e .swp sono rispettivamente i temp files di Windows e Linux. 
+```
+
+Quindi invocando da terminale il comando `make clean`, verrà eseguita la shell line specificata.
+
+
+Ma se creassimo un file chiamato esattamente come il target della nostra regola, make non eseguirebbe mai questa regola.
+Questo perché il file `clean` non dipende da alcun file, quindi non viene mai modificato ed è sempre *up to date*.
+
+Per risolvere questo problema possiamo dichiarare `clean` come **phony target**:
+```make
+.PHONY: clean
+
+clean:
+   rm -rf *.o *.bak *.swp .
+```
+
+Così a prescindere dalla presenza o meno di un file con lo stesso nome del phony target, la shell line verrà eseguita sempre.
+
+Quindi un **phony target** è un alias per una serie di comandi eseguibili attraverso una richiesta esplicita (e.g: `make clean`).
+
+
 # Esempio
 In precedenza abbiamo studiato un esempio ([questo qui](#macros)), dove una modifica all'header file non causava la ricompilazione dei sorgenti C. 
 Questo problema è risolvibile inserendo l'header file come dipendenza dei sorgenti C che lo implementano.
@@ -312,3 +347,38 @@ Consideriamo un nuovo esempio che risolve questa mancanza.
 > Si noti come l'utility make abbia esplicitato automaticamente la regola per la creazione del file oggetto del sorgente ex2.c.
 >
 > Ricordiamo inoltre che l'utility make stampa su STDOUT (di default) tutte le shell lines eseguite. È un ottimo indizio per capire se c'è qualche problema nella definizione di una regola.
+
+Si noti come nel precedente esempio non abbiamo definito alcun phony target per la cancellazione di eventuali files temporanei, inseriamone uno.
+
+Quindi il makefile precedente diventa:
+
+```make
+COMPILER = gcc
+# Option to do only preprocess, compile and assemble
+OPT_C = -c
+# Specifying output name
+OPT_O = -o
+# Path of the "include" folder
+INCL_PATH = include/
+INCL = -I $(INCL_PATH)
+HEADER_FILE = function.h
+FILE_NAME = ex2
+FUNC_IMPL_NAME = functionImplementation
+
+$(FILE_NAME).exe: $(FILE_NAME).o $(FUNC_IMPL_NAME).o
+    $(COMPILER) $(INCL) $(FILE_NAME).o $(FUNC_IMPL_NAME).o $(OPT_O) $@
+
+$(FUNC_IMPL_NAME).o: $(FUNC_IMPL_NAME).c $(INCL_PATH)$(HEADER_FILE)
+    $(COMPILER) $(OPT_C) $(INCL) $(FUNC_IMPL_NAME).c $(OPT_O) $@
+
+.PHONY: clean
+
+clean: 
+    rm -rf *.o *.bak *.swp
+```
+
+Vediamo come cambia la situazione nel terminale:
+
+![](/img/phony_targets_example.jpg)
+
+La shell ha correttamente eseguito (e stampato) tutti i comandi eseguiti.
