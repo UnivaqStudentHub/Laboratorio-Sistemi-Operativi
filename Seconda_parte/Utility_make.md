@@ -2,12 +2,17 @@
 In questa sezione introduciamo **make**, un tool per la generazione di eseguibili e altri files non sorgente di un programma, partendo dai sorgenti del programma stesso.
 
 Sfrutteremo questa utility per automatizzare la compilazione dei sorgenti C.
+
+<br></br>
+
 # Make vs Bash scripting
 Per quanto l'automatizzazione della compilazione dei sorgenti C sia possibile anche attraverso l'utilizzo di script bash, ricompilare ogni volta tutti i sorgenti è molto dispendioso in termini di risorse. 
 
 Nel caso in cui si modifichino soltanto alcuni sorgenti, non è necessario che i sorgenti non modificati vengano ricompilati nuovamente.
 
 Di fatto l'utility **make**, controlla l'ultima volta che il sorgente è stato modificato, e in base a questo criterio decide se ricompilare o meno il file.
+
+<br></br>
 
 # Il makefile e la sua struttura
 Per poter utilizzare **make** bisogna definire un **makefile**, un file di testo che consente di definire dipendenze tra files per la generazione di uno o più files target e/o l'esecuzione di comandi shell.
