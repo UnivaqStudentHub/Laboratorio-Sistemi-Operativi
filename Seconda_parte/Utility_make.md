@@ -62,7 +62,7 @@ Altrimenti sul terminale verrebbero riportati i comandi eseguiti insieme ad even
 <br></br>
 
 ## Albero delle dipendenze
-Dato che **make** analizza le regole in modo top-down, quindi è buona prassi riportare le regole all'interno del makefile in ordine decrescente di dipendenza, 
+Dato che **make** analizza le regole in modo top-down, è buona prassi riportare le regole all'interno del makefile in ordine decrescente di dipendenza, 
 partendo prima dalla regola che crea il file finale e poi specificando tutte le regole che portano alla creazione dei files richiesti per la sua creazione.
 
 Consideriamo il seguente
@@ -244,17 +244,18 @@ Intanto si pensi al makefile del kernel di un sistema operativo. Per quanto esso
 
 <br></br>
 
-## Phony targets
+### Phony targets
 Sulla riga dell'automatizzazione della compilazione di sorgenti C, resta soltanto da realizzare una regola che ci consenta di eliminare tutti quei files temporanei generati durante il processo di compilazione.
 
 Potremmo pensare di realizzare tale regola in questo modo:
 
 ```make
  clean: # no prerequisites
-     rm -rf *.o *.bak *.swp
+     rm -rf *.o *.bak *.swp core
 
- # Eliminiamo tutti i files .o, .bak e .swp nella cartella corrente
- # I files .bak e .swp sono rispettivamente i temp files di Windows e Linux. 
+ # Eliminiamo tutti i files .o, .bak, .swp e core nella cartella corrente
+ # I files .bak e .swp sono rispettivamente i temp files di Windows e Linux.
+ # I files "core" sono files generati da Linux quando un processo termina in modo anomalo (è un dump del processo).
 ```
 
 Quindi invocando da terminale il comando `make clean`, verrà eseguita la shell line specificata.
@@ -275,6 +276,7 @@ Così a prescindere dalla presenza o meno di un file con lo stesso nome del phon
 
 Quindi un **phony target** è un alias per una serie di comandi eseguibili attraverso una richiesta esplicita (e.g: `make clean`).
 
+<br></br>
 
 # Esempio
 In precedenza abbiamo studiato un esempio ([questo qui](#macros)), dove una modifica all'header file non causava la ricompilazione dei sorgenti C. 
@@ -350,7 +352,7 @@ Consideriamo un nuovo esempio che risolve questa mancanza.
 
 Si noti come nel precedente esempio non abbiamo definito alcun phony target per la cancellazione di eventuali files temporanei, inseriamone uno.
 
-Quindi il makefile precedente diventa:
+Generalizziamo ancora di più il makefile precedente:
 
 ```make
 COMPILER = gcc
@@ -366,10 +368,10 @@ FILE_NAME = ex2
 FUNC_IMPL_NAME = functionImplementation
 
 $(FILE_NAME).exe: $(FILE_NAME).o $(FUNC_IMPL_NAME).o
-    $(COMPILER) $(INCL) $(FILE_NAME).o $(FUNC_IMPL_NAME).o $(OPT_O) $@
+    $(COMPILER) $(INCL) $^ $(OPT_O) $@
 
 $(FUNC_IMPL_NAME).o: $(FUNC_IMPL_NAME).c $(INCL_PATH)$(HEADER_FILE)
-    $(COMPILER) $(OPT_C) $(INCL) $(FUNC_IMPL_NAME).c $(OPT_O) $@
+    $(COMPILER) $(OPT_C) $(INCL) $> $(OPT_O) $@
 
 .PHONY: clean
 
@@ -381,4 +383,23 @@ Vediamo come cambia la situazione nel terminale:
 
 ![](/img/phony_targets_example.jpg)
 
-La shell ha correttamente eseguito (e stampato) tutti i comandi eseguiti.
+La shell ha correttamente eseguito (e stampato) tutti i comandi specificati nel makefile.
+
+<br></br>
+
+# Funzioni per la gestione di stringhe
+Concludiamo con la presentazione di un paio di funzioni relative la gestione delle stringhe.
+
+La sintassi della prima funzione è:
+```make
+$(subst from, to, text)
+```
+che consente di sostituire dal testo dato in input tutte le occorrenze di `from` con occorrenze di `to`.
+
+Mentre la sintassi della seconda funzione è:
+```make
+$(patsubst pattern, replacement, text)
+```
+che dato il testo in input, consente di sostituire tutte le parole separate da spazi che matchano il `pattern` specificato con il testo specificato in `replacement`. 
+
+Un `pattern` viene specificato da una **pattern rule** (e.g: `%`).
