@@ -576,3 +576,7 @@ function myfunction {
 res=$(myfunction $1)
 echo $res
 ```
+<br></br>
+
+--------------------
+[Torna alla home page](/README.md)

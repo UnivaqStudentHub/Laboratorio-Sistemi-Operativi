@@ -30,6 +30,7 @@ Di seguito elenchiamo le wildcards introdotte a lezione:
 * `\` : si pone prima di una wildcard per fare escape di quest'ultima, in altri termini la wildcard viene interpretata come una stringa (anche lo stesso \ (backslash))
     * per scrivere il carattere `\` si usa `\\`
     * analogamente per `*` si usa `\*`
+<br></br>
 
 --------------------
-[Return Home](/README.md)
+[Torna alla home page](/README.md)

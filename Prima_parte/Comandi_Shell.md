@@ -386,8 +386,8 @@ In cui `source` e `destination` sono rispettivamente il file o directory da rino
 > Nella shell apparirà così:
 >![](/img/mvRenameShell.png)
 >È stato creato prima un file di testo chiamato `topolino` e poi rinominato in `yupi`
->
-><br>
+
+<br></br>
 
 --------------------
-[Return Home](/README.md)
+[Torna alla home page](/README.md)

@@ -366,3 +366,7 @@ echo [options] [string]
 Stampa una stringa
 
 Ex: `echo "hello"`
+<br></br>
+
+--------------------
+[Torna alla home page](/README.md)

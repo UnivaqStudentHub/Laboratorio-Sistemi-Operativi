@@ -408,3 +408,7 @@ $(patsubst pattern, replacement, text)
 che dato il testo in input, consente di sostituire tutte le parole separate da spazi che matchano il `pattern` specificato con il testo specificato in `replacement`. 
 
 Un `pattern` viene specificato da una **pattern rule** (e.g: `%`).
+<br></br>
+
+--------------------
+[Torna alla home page](/README.md)

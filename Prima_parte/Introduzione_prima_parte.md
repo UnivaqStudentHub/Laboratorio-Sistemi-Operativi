@@ -114,3 +114,7 @@ I parametri qui sotto elencati sono quelli più utilizzati, per una lista comple
 * **Hard Link**: è l'equivalente del file che si trova nell'HDD. Sono reference o puntatori verso punti nell'HDD. <br> La caratteristica principale dell'**Hard Link** che lo distingue dal **Soft Link** è il fatto che tramite la cancellazione del file originale non andremo a intaccare l'**Hard Link**, mentre invece il **Soft Link** diventerebbe inutilizzabile.
 
 * **Directory entry**: un file che contiene informazioni su un file o una directory, come ad esempio il nome del file, la data di creazione, la dimensione, ecc.
+<br></br>
+
+--------------------
+[Torna alla home page](/README.md)

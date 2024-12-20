@@ -57,7 +57,7 @@ Un atomo è rappresentabile anche come espressione tra [].
 > <br>
 > ![](/img/egrep4.png)
 
+<br></br>
+
 --------------------
-[Return Home](/README.md)
-<br>
-[Return Filters and Pipelines](/Filters_Redirections_Pipelines.md)
+[Torna alla home page](/README.md)

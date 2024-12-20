@@ -308,4 +308,4 @@ di un programma come input di un altro. Bisogna necessariamente passare per un f
 <br></br>
 
 --------------------
-[Go to home](/README.md)
+[Torna alla home page](/README.md)

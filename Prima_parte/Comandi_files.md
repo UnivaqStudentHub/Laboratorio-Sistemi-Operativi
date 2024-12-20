@@ -30,7 +30,7 @@ nano [file_name]
 Una volta eseguito il comando da Terminale, verrà aperto l'editor di testo sul file che si vuole modificare.
 
 Per uscire dall'editor di testo basta premere la combinazione di tasti: **CTRL + X**, se sono state effettuate delle modifiche vi verrà chiesto se volete sovrascrivere il file. 
-
+<br></br>
 
 --------------------
-[Return Home](/README.md)
+[Torna alla home page](/README.md)
