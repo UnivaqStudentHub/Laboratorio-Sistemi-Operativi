@@ -21,5 +21,6 @@ Il corso di Laboratorio di Sistemi Operativi è suddiviso in due parti.
 ## Programming in the Unix Environment
 
 * [Utility make](/Seconda_parte/Utility_make.md)
+* [File I/O & Files and Directories](/Seconda_parte/File_IO_Files_Directories.md)
 
 ****************************************
