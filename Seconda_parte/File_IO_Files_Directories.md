@@ -623,6 +623,7 @@ La maggior parte dei files ha all'interno della propria v-node table entry anche
 >
 > Consideriamo un altro caso:
 >![](/img/kernel_data_structures_same_file.png) 
+>
 > Qui invece due file descriptors diversi, associati a processi diversi, puntano due file table entry diverse, ma alla fine puntano la stessa v-node table entry.
 >
 > Ciò implica che i due processi hanno aperto un file con una *open*, che ha causato l'inserimento di due entries nella file table. Questo vuol dire che i due processi possono leggere lo stesso file da posizioni diverse,
