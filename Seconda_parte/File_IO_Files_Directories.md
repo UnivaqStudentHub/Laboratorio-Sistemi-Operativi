@@ -325,7 +325,7 @@ Mettiamo insieme le due funzioni viste poco fa nel seguente esempio:
 >
 >#define BUFFER_SIZE 4096
 >
->// il metodo main è stato scritto secondo lo standard POSIX 
+>// il metodo main è stato scritto secondo l'ISO C Standard
 >int 
 >main(void)
 >{
@@ -565,3 +565,268 @@ Nel caso in cui il pathname è relativo e il file descriptor è il valore specia
 Se il pathname è assoluto, il file descriptor viene ignorato.
 
 Tra i vari flags ve ne è uno detto `AT_SYMLINK_NOFOLLOW` che impedisce alla funzione di dereferenziare i link simbolici, permettendo così alla funzione di restituire informazioni sul link stesso. Se questo parametro non fosse specificato, allora la funzione restituirebbe anche i dettagli del file puntato dal link.
+
+<br></br>
+
+# File sharing
+Nei prossimi paragrafi introdurremo le strutture dati che il kernel adotta per poter rappresentare i files aperti,
+in quanto sono proprio le relazioni tra queste strutture che determinano gli effetti che un processo ha su un altro in termini
+di condivisione di files.
+
+## Introduzione alle strutture dati kernel per i files
+Il kernel sfrutta 3 strutture dati per rappresentare un file aperto:
+- process table;
+- file table;
+- v-node table.
+
+## Process table
+Ogni processo nel sistema ha una entry in questa tabella. Le entries della process table contengono una **open file descriptors table**, con una entry per ogni file descriptor aperto per quel processo.
+
+A ogni file descriptor viene associata una coppia del tipo `<fd flags, file pointer>` dove al momento nel primo parametro è possibile specificare soltanto il flag `FD_CLOEXEC` (close-on-exec flag):
+- se questo bit viene impostato, allora il file descriptor verrà chiuso dopo una exec andata a buon fine, altrimenti resterà aperto;
+- se il bit non viene impostato, allora il file descriptor rimarrà aperto anche in caso di exec andata a buon fine.
+
+Per impostare questo bit si sfruttano i getter e setter `F_GETFD` e `F_SETFD` con la funzione `fcntl()`.
+
+Il secondo parametro della coppia invece è un puntatore a una **file table entry**, che vedremo nel prossimo paragrafo.
+
+> Schema riassuntivo
+>
+>![](/img/process_table.png)
+
+## File table
+Ogni file aperto ha una entry in questa tabella. Ogni **file table entry** contiene:
+- i **file status flags** del file: come read, write, append, sync e non-blocking;
+- il **current file offset** del file;
+- un puntatore alla **v-node table entry** del file.
+
+> Schema riassuntivo
+>
+> ![](/img/process_table_file_table.png)
+
+## V-node table
+Ogni file o dispositivo aperto ha una entry in questa tabella, che contiene informazioni riguardanti il tipo del file e puntatori a funzioni che effettuano operazioni su di essi.
+
+La maggior parte dei files ha all'interno della propria v-node table entry anche un **i-node** (*index-node*), che contiene la maggior parte delle informazioni contenute nella struttura stat, come ad esempio:
+- proprietario del file;
+- grandezza del file;
+- numero di hard-links;
+- puntatori alla reale posizione su disco dei blocchi di dati...
+
+> Schema 
+>
+> ![](/img/v-node-i-node.png)
+
+## Schema complessivo
+>![](/img/kernel_data_structures.png)
+> In questo schema potete notare come i file pointer associati ai due file descriptors, alla fine puntino a v-node structures del tutto differenti (sono files o dispositivi diversi su disco).
+>
+> Consideriamo un altro caso:
+>![](/img/kernel_data_structures_same_file.png) 
+> Qui invece due file descriptors diversi, associati a processi diversi, puntano due file table entry diverse, ma alla fine puntano la stessa v-node table entry.
+>
+> Ciò implica che i due processi hanno aperto un file con una *open*, che ha causato l'inserimento di due entries nella file table. Questo vuol dire che i due processi possono leggere lo stesso file da posizioni diverse,
+> dato che non condividono lo stesso *current file offset*. 
+>
+> Si noti che eventuali scritture possono portare a race condition. Risolveremo questo problema introducendo delle opportune funzioni atomiche nei prossimi paragrafi.
+
+## Dischi, partizioni e file system
+In questo e nei prossimi paragrafi, presentiamo una vista concettuale della struttura del file system UNIX, entrando man mano nei dettagli.
+
+> ![](/img/unix_fs_structure.png)
+>
+> Ogni partizione del disco contiene un `boot block` e un `super block`, insieme a un certo numero di `cylinder group`.
+> 
+> Il `boot block` contiene il bootstrap program, necessario per l'avvio del sistema operativo all'accensione del computer.
+>
+> Il `super block` descrive lo stato del file system indicando: block size, grandezza della partizione, puntatori a blocchi liberi e l'i-node number della root directory.
+>
+> Come potete notare, ogni cylinder group contiene inizialmente una copia del *super block*, oltre a informazioni sul cilindro stesso.
+>
+> La `block bitmap` e la `i-node map` tengono traccia rispettivamente dei blocchi e dei i-nodes allocati / deallocati.
+>
+> Gli i-nodes sono di lunghezza prefissata e come già detto contengono la maggior parte delle informazioni di un file (che sono poi quelle contenute nella struttura stat). Vi è una corrispondenza biunivoca tra index-nodes e files.
+
+### i-nodes, data blocks e hard-links
+> Descriviamo la seguente figura (in un caso specifico)
+>
+> ![](/img/i_nodes_data_blocks1.png)
+>
+> Ogni i-node ha diversi blocchi di dati su disco.
+>
+> I due `directory block` contengono fra le varie possibili entries dello stesso formato, una coppia `<i-node number, filename>`. Notate che entrambi gli i-node number puntano allo stesso i-node. Ciò implica che questi due files, che sono a tutti gli effetti *directory entries*, puntano allo stesso file su disco, sono ossia ***hard-links***.
+>
+> In generale il massimo numero di hard-links che un file può avere è specificato dalla costante POSIX: `LINK_MAX`.
+
+### i-nodes, directory blocks e hard-links
+> Descriviamo la seguente figura (in un caso specifico)
+>
+> ![](/img/i_nodes_directory_blocks1.png)
+>
+> Consideriamo prima il directory block con due entries:
+> - la prima ha come i-node number 2549 e il filename è `.`, che sta ad indicare la directory corrente
+> - la seconda invece ha 1267 e il filename è `..`, che indica la sua parent directory.
+>
+> Passiamo all'altro directory block, che tra le sue entries ne ha 3 di particolare rilevanza in questo esempio:
+> - la prima ha come i-node number 1267 e viene indicata come current directory (quindi è la parent directory dell'altro directory block);
+> - la seconda ha un i-node number generico e indica la sua parent directory;
+> - la terza invece ha come i-node number 2549 ed indica la cartella `testdir` (confermiamo quindi la relazione di parentela tra i due blocchi).
+>
+> Possiamo quindi contare il numero di **hard-links** di questi i-nodes:
+> - l'i-node 1267 ha 3 hard-links, uno per ogni directory block ed uno proveniente dalla parent directory contenente una directory entry con i-node number pari a 1267;
+> - l'i-node 2549 invece ne ha solo 2, uno per ogni directory block.
+
+### Hard-links
+Un hard-link è un collegamento diretto all'i-node di un file.
+
+In un sistema UNIX possono sussistere diversi hard-link verso uno stesso file, quindi se volessimo eliminare un file definitivamente, bisognerebbe eliminare i suoi hard-links fino ad azzerare il link count dell'i-node.
+
+Ogni volta che viene creato un hard-link verso un file, il relativo link count viene aumentato.
+
+Ricordiamo che la struttura stat dei files contiene un campo `st_nlink` che contiene proprio il numero di hard-links del file.
+
+## Hard & Soft Links
+Per ricordare:
+- un hard-link è un riferimento all'i-node di un file;
+- un soft-link è un riferimento al pathname di un file (è un riferimento a un hard-link).
+
+I link simbolici vennero introdotti per poter ovviare ad alcune limitazioni degli hard-links, tra cui:
+- gli hard-links a directories possono essere creati solo dal superuser, nei sistemi che danno la possibilità di farlo;
+- in generale non è possibile avere hard-links che puntano files presenti in altri file systems;
+
+Consideriamo il seguente
+> Esempio
+>
+> Creiamo due files:
+>```bash
+> touch pippo; touch pluto
+>```
+> E inseriamo del testo al loro interno:
+>```bash
+> echo "This is pippo" > pippo
+> echo "This is pluto" > pluto
+>```
+> Creiamo ora un hard-link verso `pippo` e un soft-link verso `pluto`:
+>```bash
+> ln pippo pippo_hard_link
+> ln -s pippo pippo_soft_link
+>```
+> Diamo un'occhiata a ciò che ci restituisce il comando `ls`:
+>
+> ![](/img/hard_soft_links.png)
+>
+> Come potete notare, il numero di hard-links dell'i-node puntato da `pippo` e `pippo_hard_link` è aumentato.
+>
+> Proviamo a modificare il nome del file `pippo`:
+>
+> ![](/img/hard_soft_links1.png)
+>
+> Non è cambiato nulla, infatti le due directory entries puntano direttamente all'i-node di quel file.
+>
+> Il discorso cambia se si modifica il nome del file puntato dal soft-link:
+>
+> ![](/img/hard_soft_links2.png)
+>
+> Il link è diventato invalido.
+
+## Directory hard-links
+Come già detto in precedenza, gli hard-links a directories possono essere creati solo dai superuser, se il sistema che si sta usando offre questa possibilità.
+
+Ciò è dovuto al fatto che i directory hard-links possono rompere il file system in diversi modi.
+
+### Cicli nel file system
+Un hard-link a una directory potrebbe puntare all'i-node del parent della directory corrente, creando quindi un ciclo.
+
+> Esempio
+>```bash
+> mkdir -p /tmp/a/b;
+> cd /tmp/a/b
+> ln -d /tmp/a l
+>```
+> Creiamo quindi una serie di directory e ci spostiamo in quella più interna dove proviamo a creare un hard-link al parent.
+> Nella maggior parte dei sistemi (come Ubuntu) l'operazione fallisce, in altri come Mac OS è possibile sfruttare l'opzione `-F`,
+> anche se elimina il link precedente per poter creare quello nuovo.
+>
+> In sistemi in cui questa operazione è permessa si può entrare in un ciclo,
+> la seguente operazione è concessa:
+>```bash
+> cd /tmp/a/b/l/b/l/b/l/b/l/b/l/b
+>```
+> Se un programma effettuasse la scansione dell'intero file system, entrerebbe tranquillamente in un ciclo da cui potrebbe non uscire mai.
+>
+> A questo punto il file system non ha più una struttura ad albero.
+
+### Ambiguità nelle parent directories
+Con un loop nel file system, un file può avere più directories padre.
+
+Riprendendo in esame lo scorso esempio, la directory `b` ha due parent directories:
+- `/tmp/a/`
+- `/tmp/a/b/l`
+
+
+### Moltiplicazione dei files
+Con un loop nel file system, un file può essere identificato da path che non sono più univoci.
+
+> Esempio
+>
+> Riprendiamo l'esempio precedente e supponiamo di avere un file chiamato `in_loop.txt` all'interno della directory `b`.
+> 
+> In questo caso il file può essere identificato da infiniti path diversi:
+> - `/tmp/a/b/in_loop.txt`;
+> - `/tmp/a/b/l/b/in_loop.txt` o addirittura
+> - `/tmp/a/b/l/b//l/b/l/b/l/b/l/b/l/b/l/b/l/b/in_loop.txt`.
+>
+> e così via.
+>
+> Ovviamente l'i-node puntato è sempre lo stesso, quindi la moltiplicazione dei files è "fittizia".
+>
+> Ciò però potrebbe indurre un programma a operare su uno stesso file più volte.
+
+## System calls per la gestione di hard-links
+Presentiamo alcune system calls per la creazione e l'eliminazione di hard-links programmaticamente.
+
+### link
+Il prototipo della funzione è il seguente:
+
+>```C
+> #include <unistd.h>
+>
+> int link(const char *path1, const char *path2); // returns 0 if OK, 1 otherwise
+>```
+> Affinché le system call abbiano successo, `path1` e `path2` devono trovarsi nello stesso file system. Lo standard POSIX ha inoltre stabilito per questa funzione che `path1` <b>non</b> può essere una directory.
+>
+> La prima funzione crea una directory entry col valore puntato da `*path2` con gli attributi del file puntato da `*path1`.
+
+
+### linkat
+La funzione è quasi del tutto analoga a **link**, il prototipo è il seguente:
+>```C
+> #include <unistd.h>
+>
+> int linkat(int fd1, const char *name1, int fd2, const char *name2, int flag); // returns 0 if OK, 1 otherwise
+>```
+> Potendo esplicitare i file descriptors delle directory entries da linkare, con questa funzione è possibile creare hard-links a files nello stesso file system ma in path diversi.
+>
+> L'intepretazione dei file descriptors e dei path è analoga a quanto visto per tutte le funzioni nella loro variante `at`, come [fstatat](#fstatat).
+>
+> Se il file da cui creare l'hard-link è un soft-link, allora tra i flags è possibile esplicitare il flag `AT_SYMLINK_FOLLOW` per decidere se creare un hard-link verso il soft-link oppure direttamente verso l'i-node del file. Se il flag è presente allora il link viene creato verso il file puntato dal link simbolico.
+
+### unlink
+Questa funzione rimuove un hard-link dal file in input, il prototipo è il seguente:
+>```C
+> #include <unistd.h>
+>
+> int unlink(const char *pathname); // returns 0 if OK, 1 otherwise
+>```
+> Ricordate sempre che vi è un side-effect per ogni aggiunta / rimozione di hard-links, ed è l'aggiornamento del link counter degli i-nodes, oltre all'aggiornamento della struttura stat.
+
+### unlinkat
+La funzione è del tutto analoga a **unlink**, il prototipo è il seguente:
+>```C
+> #include <unistd.h>
+>
+> int unlinkat(int fd, const char *pathname, int flag); // returns 0 if OK, 1 otherwise
+>```
+> L'intepretazione dei file descriptors e dei path è analoga a quanto visto per tutte le funzioni nella loro variante `at`, come [fstatat](#fstatat).
+>
+> È possibile esplicitare il flag `AT_REMOVEDIR`, che se impostato permette alla funzione di comportarsi esattamente come la funzione `rmdir()`, che rimuove directories vuote. Altrimenti la funzione si comporta esattamente come `unlink`.
