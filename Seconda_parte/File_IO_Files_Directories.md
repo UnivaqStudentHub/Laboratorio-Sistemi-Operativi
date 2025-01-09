@@ -619,6 +619,7 @@ La maggior parte dei files ha all'interno della propria v-node table entry anche
 
 ## Schema complessivo
 >![](/img/kernel_data_structures.png)
+>
 > In questo schema potete notare come i file pointer associati ai due file descriptors, alla fine puntino a v-node structures del tutto differenti (sono files o dispositivi diversi su disco).
 >
 > Consideriamo un altro caso:
